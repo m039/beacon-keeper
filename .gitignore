@@ -7,3 +7,5 @@ gen
 .idea
 .factorypath
 *.iml
+.gradle
+build/

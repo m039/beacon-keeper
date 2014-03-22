@@ -29,7 +29,7 @@
       <artifactId>sdk</artifactId>
       <version>1.0.0</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/lib/estimote-sdk-preview.jar</systemPath>
+      <systemPath>${project.basedir}/libs/estimote-sdk-preview.jar</systemPath>
     </dependency>
 
     <dependency>
