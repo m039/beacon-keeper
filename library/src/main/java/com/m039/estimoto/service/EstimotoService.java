@@ -9,14 +9,18 @@
 
 package com.m039.estimoto.service;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.RemoteException;
+
+import com.estimote.sdk.Beacon;
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
 
 /**
  *
@@ -38,33 +42,29 @@ public class EstimotoService extends Service {
     public static final String EXTRA_TURN_ON = PACKAGE + "extra.TURN_ON";
     public static final String EXTRA_TURN_OFF = PACKAGE + "extra.TURN_OFF";
 
-    private ScheduledThreadPoolExecutor mScheduledThreadPoolExecutor;
-
     private final EstimotoServiceBinder mEstimotoServiceBinder =
         new EstimotoServiceBinder();
 
-    private OnCountListener mOnCountListener = null;
-    private volatile int mCount;
+    private BeaconManager.RangingListener mRangingListener = null;
     private boolean mStarted = false;
     private Handler mHandler = new Handler();
-
-    public interface OnCountListener {
-        public void onCount(int count);
-    }
+    private BeaconManager mBeaconManager;
 
     public class EstimotoServiceBinder extends Binder {
-        public void setCountListener(OnCountListener l) {
-            mOnCountListener = l;
+        public void setOnBeaconsDiscoveredListener(BeaconManager.RangingListener l) {
+            mRangingListener = l;
         }
 
-        public void unsetCountListener() {
-            mOnCountListener = null;
+        public void unsetOnBeaconsDiscoveredListener() {
+            mRangingListener = null;
         }
     }
 
     @Override
     public void onCreate() {
         logd("onCreate");
+
+        beaconOnCreate();
     }
 
     @Override
@@ -78,34 +78,14 @@ public class EstimotoService extends Service {
             if (intent.getBooleanExtra(EXTRA_TURN_ON, false)) {
 
                 if (!mStarted) {
-                    mCount = 0;
-                    mScheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-                    mScheduledThreadPoolExecutor.scheduleAtFixedRate(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mOnCountListener != null) {
-                                    mHandler.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                mOnCountListener.onCount(mCount);
-                                            }
-                                        });
-                                }
-
-                                logd("count = " + mCount);
-
-                                mCount++;
-                            }
-                        }, 0, 1000L, TimeUnit.MILLISECONDS);
+                    beaconTurnOn();
                     mStarted = true;
                 }
 
             } else if (intent.getBooleanExtra(EXTRA_TURN_OFF, false)) {
 
                 if (mStarted) {
-                    mScheduledThreadPoolExecutor.shutdown();
-                    mScheduledThreadPoolExecutor = null;
-                    mCount = 0;
+                    beaconTurnOff();
                     mStarted = false;
                 }
             }
@@ -121,13 +101,9 @@ public class EstimotoService extends Service {
     public void onDestroy() {
         logd("onDestroy");
 
+        beaconDestroy();
         mStarted = false;
-        mOnCountListener = null;
-
-        if (mScheduledThreadPoolExecutor != null)  {
-            mScheduledThreadPoolExecutor.shutdown();
-            mScheduledThreadPoolExecutor = null;
-        }
+        mRangingListener = null;
     }
 
     @Override
@@ -135,6 +111,62 @@ public class EstimotoService extends Service {
         return mEstimotoServiceBinder;
     }
 
+    //
+    // Beacon functions
+    //
+
+    private static final String ESTIMOTE_PROXIMITY_UUID =
+        "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
+
+    private static final Region ALL_ESTIMOTE_BEACONS =
+        new Region("regionId", ESTIMOTE_PROXIMITY_UUID, null, null);
+
+    private void beaconOnCreate() {
+        mBeaconManager = new BeaconManager(this);
+        mBeaconManager.setRangingListener(new BeaconManager.RangingListener() {
+                @Override
+                public void onBeaconsDiscovered(final Region region, final List<Beacon> beacons) {
+                    mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mRangingListener != null) {
+                                    mRangingListener.onBeaconsDiscovered(region, beacons);
+                                }
+                            }
+                        });
+                }
+            });
+    }
+
+    private void beaconTurnOn() {
+        mBeaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+                @Override public void onServiceReady() {
+                    try {
+                        mBeaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+                    } catch (RemoteException e) {
+                        android.util.Log.e(TAG, "Cannot start ranging", e);
+                    }
+                }
+            });
+    }
+
+    private void beaconTurnOff() {
+        try {
+            mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS);
+        } catch (RemoteException e) {
+            android.util.Log.e(TAG, "Cannot stop but it does not matter now", e);
+        }
+
+        mBeaconManager.disconnect();
+    }
+
+    private void beaconDestroy() {
+    }
+
+    //
+    // Misc
+    // 
+    
     private void logd(String msg) {
         android.util.Log.d(TAG, msg);
     }

@@ -2,11 +2,12 @@
 <resources>
 
   <string name="a_main__turn_on">Turn on</string>
+  <string name="a_main__turn_bluetooth_on">Turn on</string>
   <string name="a_main__turn_off">Turn off</string>
-  <string name="a_main__help__control">Service control:</string>
-  <string name="a_main__help__status">Service status:</string>
+  <string name="a_main__help__bluetooth_control">Bluetooth control:</string>
+  <string name="a_main__help__service_control">Service control:</string>
+  <string name="a_main__help__service_status">Service status:</string>
 
   <string name="app_name">Estimoto service demo</string>
-  <string name="hello">Hello com.m039.estimoto!</string>
 
 </resources>

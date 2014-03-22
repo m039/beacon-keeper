@@ -25,6 +25,14 @@
     </dependency>
 
     <dependency>
+      <groupId>com.estimote</groupId>
+      <artifactId>sdk</artifactId>
+      <version>1.0.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/estimote-sdk-preview.jar</systemPath>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

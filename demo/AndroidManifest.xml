@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.m039.estimoto"
     android:versionCode="1"
-    android:versionName="1.0.0" 
+    android:versionName="1.0.0"
     >
 
     <uses-sdk
@@ -22,10 +22,17 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.m039.estimoto.service.EstimotoService" />
+        <service android:name="com.m039.estimoto.service.EstimotoService"
+                 />
+
+        <service android:name="com.estimote.sdk.service.BeaconService"
+                 android:exported="false"
+                 />
 
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
 </manifest>
