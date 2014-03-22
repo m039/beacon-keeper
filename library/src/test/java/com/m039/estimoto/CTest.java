@@ -7,7 +7,12 @@
  * 
  */
 
-package test.java.com.m039.estimoto;
+package com.m039.estimoto;
+
+import org.junit.Test;
+import org.junit.Assert;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 /**
  * 
@@ -24,7 +29,6 @@ public class CTest {
     @Test
     public void testC() {
         Assert.assertEquals(C.A, 14);
-        Assert.assertEquals(C.A, 15);
     }            
 
 } // CTest
