@@ -124,8 +124,13 @@ public class EstimotoService extends Service {
     private void beaconOnCreate() {
         mBeaconManager = new BeaconManager(this);
         mBeaconManager.setRangingListener(new BeaconManager.RangingListener() {
+                
+                int logTimes = 0;
+                
                 @Override
                 public void onBeaconsDiscovered(final Region region, final List<Beacon> beacons) {
+                    logd("onBeaconsDiscovered, times = " + logTimes++);
+
                     mHandler.post(new Runnable() {
                             @Override
                             public void run() {
