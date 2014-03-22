@@ -35,6 +35,7 @@ public class EstimotoServiceUtil {
         Intent intent = newEstimotoIntent(ctx, EstimotoService.ACTION_CONTROL);
         intent.putExtra(EstimotoService.EXTRA_TURN_OFF, true);
         ctx.startService(intent);
+        ctx.stopService(intent); // hack
     }
 
     private static Intent newEstimotoIntent(Context ctx, String action) {
