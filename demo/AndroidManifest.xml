@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
 
+        <service android:name="com.m039.estimoto.service.EstimotoService" />
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

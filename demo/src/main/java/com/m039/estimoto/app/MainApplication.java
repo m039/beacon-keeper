@@ -11,6 +11,8 @@ package com.m039.estimoto.app;
 
 import android.app.Application;
 
+import com.m039.estimoto.util.EstimotoServiceUtil;
+
 /**
  *
  *
@@ -25,6 +27,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate () {
         super.onCreate ();
+        EstimotoServiceUtil.turnOn(this);
     }
 
 } // MainApplication

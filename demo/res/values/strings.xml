@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <string name="a_main__turn_on">Turn on</string>
+  <string name="a_main__turn_off">Turn off</string>
+  <string name="a_main__help__control">Service control:</string>
+  <string name="a_main__help__status">Service status:</string>
+
   <string name="app_name">Estimoto service demo</string>
   <string name="hello">Hello com.m039.estimoto!</string>
 
