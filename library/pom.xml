@@ -6,30 +6,34 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.m039.estimoto</groupId>
+    <groupId>com.m039.beacon</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>library</artifactId>
-
-  <name>com.m039.estimoto.library</name>
   <packaging>apklib</packaging>
+
+  <repositories>
+    <repository>
+      <id>libs</id>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>ignore</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>file://${project.basedir}/libs</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.estimote</groupId>
-      <artifactId>sdk</artifactId>
-      <version>1.0.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/libs/estimote-sdk-preview.jar</systemPath>
     </dependency>
 
     <dependency>
