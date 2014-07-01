@@ -8,6 +8,11 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-    <application />
+    <application>
+      <service
+          android:name="com.m039.ibeacon.service.IBeaconService"
+          >
+      </service>
+    </application>
 
 </manifest>

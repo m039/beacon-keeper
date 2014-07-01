@@ -2,6 +2,7 @@ package com.m039.ibeacon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
@@ -11,7 +12,9 @@ import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.m039.ibeacon.content.IBeacon;
+import com.m039.ibeacon.service.IBeaconService;
 import com.m039.ibeacon.util.LEScanner;
 import com.m039.ibeacon.util.OnEnableBluetoothCallback;
 import com.m039.ibeacon.R;
@@ -140,6 +143,12 @@ public class DemoActivity extends Activity {
         mList = (ListView) findViewById(R.id.list);
 
         mOnEnableBluetoothCallback.onCreate(this, savedInstanceState, REQUEST_CODE);
+
+        IBeaconService.startServiceByAlarmManager(this);
+        IBeaconService.startServiceByAlarmManager(this);
+        IBeaconService.startServiceByAlarmManager(this);
+        IBeaconService.startServiceByAlarmManager(this);
+        IBeaconService.startServiceByAlarmManager(this);
     }
 
     @Override

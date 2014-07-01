@@ -11,9 +11,12 @@ package com.m039.ibeacon;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
 
 /**
  * 
@@ -25,6 +28,8 @@ import android.content.pm.PackageManager;
  * @since 
  */
 public class U {
+
+    public static final String TAG = "m039-U";
 
     public static class BLE {
 
@@ -71,6 +76,23 @@ public class U {
         
         public static Intent createRequestEnableIntent() {
             return new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        }
+    }
+
+    public static class Service {
+        public static Bundle getMetaData(Context ctx, Class<?> clazz) {
+            try {
+                return ctx
+                    .getPackageManager()
+                    .getServiceInfo(new ComponentName(ctx, clazz), PackageManager.GET_META_DATA)
+                    .metaData;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.wtf(TAG, e);
+                return null;
+            } catch (NullPointerException e) {
+                Log.wtf(TAG, e);
+                return null;
+            }
         }
     }
 
