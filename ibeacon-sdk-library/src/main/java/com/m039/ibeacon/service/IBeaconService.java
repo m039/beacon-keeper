@@ -1,10 +1,10 @@
-/** IBeaconService.java --- 
+/** IBeaconService.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Author: Dmitry Mozgin <m0391n@gmail.com>
  *
- * 
+ *
  */
 
 package com.m039.ibeacon.service;
@@ -17,25 +17,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.m039.ibeacon.content.IBeacon;
 import com.m039.ibeacon.library.R;
+import com.m039.ibeacon.U;
 import com.m039.ibeacon.util.SimpleLeScanner;
 
 /**
- * 
+ *
  *
  * Created: 07/01/14
  *
  * @author Dmitry Mozgin
- * @version 
- * @since 
+ * @version
+ * @since
  */
 public class IBeaconService extends Service {
 
-    public static final String META_SCANNING_TIME_MS = "scanning_time_ms";
     public static final String TAG = "m039";
+
+    public static final String PACKAGE = "com.m039.ibeacon.service.";
+    
+    public static final String ACTION_FOUND_IBEACON = PACKAGE + "action.FOUND_IBEACON";
+    public static final String ACTION_BLE_DISABLED = PACKAGE + "action.BLE_DISABLED";
+    public static final String ACTION_BLE_ENABLED = PACKAGE + "action.BLE_ENABLED";
+
+    public static final String EXTRA_BEACON = PACKAGE + "extra.beacon";
+
+    public static final String META_SCANNING_TIME_MS = "scanning_time_ms";
+
 
     public static void startService(Context ctx) {
         ctx.startService(new Intent(ctx, IBeaconService.class));
@@ -46,8 +56,8 @@ public class IBeaconService extends Service {
         PendingIntent pi = PendingIntent.getService(ctx, 0, i, 0);
 
         AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, 
-                        System.currentTimeMillis(), 
+        am.setRepeating(AlarmManager.RTC_WAKEUP,
+                        System.currentTimeMillis(),
                         getRepeatTimeMs(ctx),
                         pi);
     }
@@ -70,7 +80,7 @@ public class IBeaconService extends Service {
     private SimpleLeScanner.LeScanCallback mLeScanCallback = new SimpleLeScanner.LeScanCallback() {
             @Override
             public void onLeScan(BluetoothDevice device, int rssi, IBeacon ibeacon) {
-                Log.d(TAG, "onLeScan, b : " + ibeacon);
+                sendFoundBeaconBroadcast(ibeacon);
             }
         };
 
@@ -78,12 +88,18 @@ public class IBeaconService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Log.d(TAG, "onCreate");
+        if (U.BLE.isEnabled(this)) {
+            sendBleEnabledBroadcast();
+        } else {
+            sendBleDisabledBroadcast();
+        }
 
         mSimpleLeScanner = new SimpleLeScanner();
-        mSimpleLeScanner.startScan(this, mLeScanCallback);
-
-        mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+        if (mSimpleLeScanner.startScan(this, mLeScanCallback)) {
+            mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+        } else {
+            mOnStopScanRunnable.run();
+        }
     }
 
     private Runnable mOnStopScanRunnable = new Runnable() {
@@ -97,18 +113,31 @@ public class IBeaconService extends Service {
         };
 
     @Override
-    public int onStartCommand(Intent intent, int flags, final int startId) {
-        Log.d(TAG, "Received start id " + startId + ": " + intent);        
-        
-        return START_STICKY;
-    }    
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy");
-
         mSimpleLeScanner = null;
+    }
+
+    private void sendFoundBeaconBroadcast(IBeacon ibeacon) {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_FOUND_IBEACON);
+        intent.setPackage(getPackageName());
+        intent.putExtra(EXTRA_BEACON, ibeacon);
+        sendBroadcast(intent); 
+    }
+
+    private void sendBleEnabledBroadcast() {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_BLE_ENABLED);
+        intent.setPackage(getPackageName());
+        sendBroadcast(intent); 
+    }
+    
+    private void sendBleDisabledBroadcast() {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_BLE_DISABLED);
+        intent.setPackage(getPackageName());
+        sendBroadcast(intent); 
     }
 
     @Override

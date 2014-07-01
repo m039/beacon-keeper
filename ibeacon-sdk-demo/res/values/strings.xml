@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="a_main__turn_on">Turn on</string>
-  <string name="a_main__turn_bluetooth_on">Turn on</string>
-  <string name="a_main__turn_off">Turn off</string>
-  <string name="a_main__help__bluetooth_control">Bluetooth control:</string>
-  <string name="a_main__help__service_control">Service control:</string>
-  <string name="a_main__help__service_status">Service status:</string>
+  <string name="a_demo__ble_enabled">BLE enabled</string>
+  <string name="a_demo__ble_disabled">BLE disabled</string>
 
-  <string name="app_name">Estimoto service demo</string>
+  <string name="app_name">IBeacon sdk demo</string>
 
 </resources>

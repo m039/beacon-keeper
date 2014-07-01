@@ -9,6 +9,9 @@
 
 package com.m039.ibeacon.content;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 
  *
@@ -18,12 +21,17 @@ package com.m039.ibeacon.content;
  * @version 
  * @since 
  */
-public final class IBeacon {
+public final class IBeacon 
+    implements Parcelable
+{
     
     protected String    mProximityUuid;
     protected int       mMajor;
     protected int       mMinor;
     protected int       mTxPower;
+
+    protected IBeacon() {
+    }
 
     public String getProximityUuid() {
         return mProximityUuid;
@@ -77,5 +85,37 @@ public final class IBeacon {
         return String.format("IBeacon proximityUuid: '%s', major: %d, minor: %d, txPower: %d",
                              mProximityUuid, mMajor, mMinor, mTxPower);
     }
+
+    //
+    // Parcelable
+    //
+    
+    private IBeacon(Parcel in) {
+        mProximityUuid = in.readString();
+        mMajor = in.readInt();
+        mMinor = in.readInt();
+        mTxPower = in.readInt();
+    }
+    
+    public int describeContents() {
+        return 0;
+    }
+    
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(mProximityUuid);
+        out.writeInt(mMajor);
+        out.writeInt(mMinor);
+        out.writeInt(mTxPower);
+    }
+    
+    public static final Parcelable.Creator<IBeacon> CREATOR = new Parcelable.Creator<IBeacon>() {
+            public IBeacon createFromParcel(Parcel in) {
+                return new IBeacon(in);
+            }
+            
+            public IBeacon[] newArray(int size) {
+                return new IBeacon[size];
+            }
+        };
 
 } // IBeacon

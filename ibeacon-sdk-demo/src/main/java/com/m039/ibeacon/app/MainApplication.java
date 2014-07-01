@@ -11,6 +11,8 @@ package com.m039.ibeacon.app;
 
 import android.app.Application;
 
+import com.m039.ibeacon.service.IBeaconService;
+
 /**
  *
  *
@@ -25,6 +27,8 @@ public class MainApplication extends Application {
     @Override
     public void onCreate () {
         super.onCreate ();
+
+        IBeaconService.startServiceByAlarmManager(this);
     }
 
 } // MainApplication

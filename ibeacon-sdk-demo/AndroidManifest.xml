@@ -29,6 +29,18 @@
 
     <service android:name="com.m039.ibeacon.service.IBeaconService"/>
 
+    <receiver android:name="com.m039.ibeacon.receiver.IBeaconReceiver">
+      <intent-filter>
+        <action android:name="com.m039.ibeacon.service.action.FOUND_IBEACON"/>
+      </intent-filter>
+    </receiver>
+
+    <receiver android:name="com.m039.ibeacon.receiver.IBeaconReceiver">
+      <intent-filter>
+        <action android:name="com.m039.ibeacon.service.action.FOUND_IBEACON"/>
+      </intent-filter>
+    </receiver>
+
   </application>
 
 </manifest>
