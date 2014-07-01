@@ -12,19 +12,18 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>demo</artifactId>
+  <artifactId>beacon-sdk-demo</artifactId>
   <packaging>apk</packaging>
 
   <dependencies>
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>com.m039.beacon</groupId>
-      <artifactId>library</artifactId>
+      <artifactId>beacon-sdk-library</artifactId>
       <version>${project.version}</version>
       <type>apklib</type>
     </dependency>

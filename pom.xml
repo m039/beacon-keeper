@@ -10,18 +10,17 @@
   <version>1.0.0</version>
 
   <packaging>pom</packaging>
-  <name>com.m039.beacon.parent</name>
 
   <modules>
-    <module>library</module>
-    <module>demo</module>
+    <module>beacon-sdk-library</module>
+    <module>beacon-sdk-demo</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.android.sdk>19</version.android.sdk>
-    <version.android.plugin>3.9.0-rc.1</version.android.plugin>
-    <version.java>1.6</version.java>
+    <version.android.plugin>3.9.0-rc.2</version.android.plugin>
+    <version.java>1.7</version.java>
     <version.compiler.plugin>3.1</version.compiler.plugin>
     <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
   </properties>

@@ -12,7 +12,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>library</artifactId>
+  <artifactId>beacon-sdk-library</artifactId>
   <packaging>apklib</packaging>
 
   <repositories>
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
