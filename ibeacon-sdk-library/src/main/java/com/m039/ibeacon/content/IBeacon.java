@@ -75,7 +75,7 @@ public final class IBeacon
         IBeacon lhs = (IBeacon) o;
 
         return (mProximityUuid == null? 
-                lhs.mProximityUuid == null : mProximityUuid.equals(lhs.mProximityUuid)) &&
+                lhs.mProximityUuid == null : mProximityUuid.equalsIgnoreCase(lhs.mProximityUuid)) &&
             mMajor == lhs.mMajor &&
             mMinor == lhs.mMinor;
     }
