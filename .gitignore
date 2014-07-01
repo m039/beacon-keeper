@@ -8,4 +8,4 @@ gen
 .factorypath
 *.iml
 .gradle
-build/
+sandbox

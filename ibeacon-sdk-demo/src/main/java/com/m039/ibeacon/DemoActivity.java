@@ -42,15 +42,17 @@ public class DemoActivity extends Activity {
     }
 
     private BroadcastReceiver mIBeaconReceiver = new IBeaconReceiver() {
+            
             @SuppressWarnings("unchecked")
 			@Override
             protected void onFoundIBeacon(IBeacon ibeacon) {
                 mReceivedData.put(ibeacon.hashCode(),
-                                  String.format("ibeacon " + mReceivedData.size() + "\n" + 
+                                  String.format("ibeacon %x\n" +
                                                 "proximityUuid: %s\n" +
                                                 "major: %s\n" +
                                                 "minor: %s\n" +
                                                 "txPower: %s",
+                                                ibeacon.hashCode(),
                                                 ibeacon.getProximityUuid(),
                                                 ibeacon.getMajor(),
                                                 ibeacon.getMinor(),
