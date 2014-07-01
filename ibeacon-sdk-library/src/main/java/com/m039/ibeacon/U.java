@@ -7,7 +7,7 @@
  * 
  */
 
-package com.m039.beacon;
+package com.m039.ibeacon;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;

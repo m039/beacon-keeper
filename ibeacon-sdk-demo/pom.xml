@@ -6,46 +6,26 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.m039.beacon</groupId>
+    <groupId>com.m039.ibeacon</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>beacon-sdk-library</artifactId>
-  <packaging>apklib</packaging>
-
-  <repositories>
-    <repository>
-      <id>libs</id>
-      <releases>
-        <enabled>true</enabled>
-        <checksumPolicy>ignore</checksumPolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <url>file://${project.basedir}/libs</url>
-    </repository>
-  </repositories>
+  <artifactId>ibeacon-sdk-demo</artifactId>
+  <packaging>apk</packaging>
 
   <dependencies>
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.robolectric</groupId>
-      <artifactId>robolectric</artifactId>
-      <scope>test</scope>
+      <groupId>com.m039.ibeacon</groupId>
+      <artifactId>ibeacon-sdk-library</artifactId>
+      <version>${project.version}</version>
+      <type>apklib</type>
     </dependency>
   </dependencies>
 

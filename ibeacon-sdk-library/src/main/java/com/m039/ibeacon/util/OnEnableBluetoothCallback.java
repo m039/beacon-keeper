@@ -7,13 +7,13 @@
  * 
  */
 
-package com.m039.beacon.util;
+package com.m039.ibeacon.util;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.m039.beacon.U;
+import com.m039.ibeacon.U;
 
 /**
  * 

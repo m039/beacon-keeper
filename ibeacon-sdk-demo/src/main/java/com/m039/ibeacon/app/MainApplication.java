@@ -7,7 +7,7 @@
  *
  */
 
-package com.m039.estimoto.app;
+package com.m039.ibeacon.app;
 
 import android.app.Application;
 

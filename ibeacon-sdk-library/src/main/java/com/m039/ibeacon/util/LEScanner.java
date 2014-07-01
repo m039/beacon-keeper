@@ -7,13 +7,16 @@
  * 
  */
 
-package com.m039.beacon.util;
+package com.m039.ibeacon.util;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.Handler;
 
-import com.m039.beacon.U;
+import com.m039.ibeacon.U;
+import com.m039.ibeacon.content.IBeacon;
+import com.m039.ibeacon.content.IBeaconFactory;
 
 /**
  * 
@@ -38,7 +41,20 @@ public class LEScanner {
 
     private Runnable mOnContinueScanRunnable = null;
 
-    public boolean startScan(final Context ctx, final BluetoothAdapter.LeScanCallback callback) {
+    public static abstract class LeScanCallback 
+        implements BluetoothAdapter.LeScanCallback {
+        @Override
+        public void onLeScan (BluetoothDevice device, int rssi, byte[] scanRecord) {
+            IBeacon ibeacon = IBeaconFactory.decodeScanRecord(scanRecord);
+            if (ibeacon != null) {
+                onLeScan(device, rssi, ibeacon);
+            }
+        }
+
+        public abstract void onLeScan(BluetoothDevice device, int rssi, IBeacon ibeacon);
+    }
+
+    public boolean startScan(final Context ctx, final LeScanCallback callback) {
         BluetoothAdapter ba = U.getBluetoothAdapter(ctx);
         if (ba != null && mOnContinueScanRunnable == null) {
             if (ba.startLeScan(callback)) {
@@ -70,7 +86,7 @@ public class LEScanner {
         return false;
     }
 
-    public void stopScan(Context ctx, BluetoothAdapter.LeScanCallback callback) {
+    public void stopScan(Context ctx, LeScanCallback callback) {
         BluetoothAdapter ba = U.getBluetoothAdapter(ctx);
         if (ba != null && mOnContinueScanRunnable != null) {
             mHandler.removeCallbacks(mOnContinueScanRunnable);

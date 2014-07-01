@@ -1,10 +1,9 @@
-package com.m039.estimoto;
+package com.m039.ibeacon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +11,12 @@ import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.m039.ibeacon.content.IBeacon;
+import com.m039.ibeacon.util.LEScanner;
+import com.m039.ibeacon.util.OnEnableBluetoothCallback;
+import com.m039.ibeacon.R;
 
-import com.m039.beacon.U;
-import com.m039.beacon.util.LEScanner;
-import com.m039.beacon.util.OnEnableBluetoothCallback;
-
+@SuppressLint("UseSparseArrays")
 public class DemoActivity extends Activity {
 
     public static final String TAG = "m039";
@@ -57,22 +57,22 @@ public class DemoActivity extends Activity {
             }
         };
 
-    private HashMap<String, String> mReceivedData =
-        new HashMap<String, String>();
+    private HashMap<Integer, String> mReceivedData =
+        new HashMap<Integer, String>();
 
     private ArrayList<String> mItems = new ArrayList<String>();
     private Handler mHandler = new Handler();
 
-    private BluetoothAdapter.LeScanCallback mLeScanCallback =
-        new BluetoothAdapter.LeScanCallback() {
+    private LEScanner.LeScanCallback mLeScanCallback =
+        new LEScanner.LeScanCallback() {
 
             volatile boolean posted = false;
 
             private Runnable mNotifyDataSetChangedRunnable = new Runnable() {
-                	@SuppressWarnings("unchecked")    
-            		@Override
+                    @SuppressWarnings("unchecked")
+                    @Override
                     public void run() {
-						ArrayAdapter<String> adapter = (ArrayAdapter<String>) mList.getAdapter();
+                        ArrayAdapter<String> adapter = (ArrayAdapter<String>) mList.getAdapter();
                         if (adapter != null) {
                             mItems.clear();
                             mItems.addAll(mReceivedData.values());
@@ -84,8 +84,8 @@ public class DemoActivity extends Activity {
                 };
 
             @SuppressWarnings("unchecked")
-			@Override
-            public void onLeScan (BluetoothDevice device, int rssi, byte[] scanRecord) {
+            @Override
+            public void onLeScan (BluetoothDevice device, int rssi, IBeacon ibeacon) {
                 if (mList != null) {
                     ArrayAdapter<String> adapter = (ArrayAdapter<String>) mList.getAdapter();
                     if (adapter == null) {
@@ -93,12 +93,16 @@ public class DemoActivity extends Activity {
                         mList.setAdapter(adapter);
                     }
 
-                    mReceivedData.put(device.toString(),
-                                      String.format("rssi: %s\naddress: %s\nscanRecord.length: %s\ndata: %s",
-                                                    rssi,
-                                                    device.getAddress(),
-                                                    (scanRecord != null)? scanRecord.length : -1,
-                                                    U.byteArrayToHex(scanRecord)));
+                    mReceivedData.put(ibeacon.hashCode(),
+                                      String.format("ibeacon:\n" +
+                                                    "proximityUuid: %s\n" +
+                                                    "major: %s\n" +
+                                                    "minor: %s\n" +
+                                                    "txPower: %s",
+                                                    ibeacon.getProximityUuid(),
+                                                    ibeacon.getMajor(),
+                                                    ibeacon.getMinor(),
+                                                    ibeacon.getTxPower()));
 
                     if (!posted) {
                         mHandler.postDelayed(mNotifyDataSetChangedRunnable, 100);
