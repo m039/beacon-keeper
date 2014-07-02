@@ -24,7 +24,14 @@ Todo
    * Нажатие на элемент открывает окно с информацией о нем, которая, кстати, также может изменяться. Фильтр по региону?
    * Использовать CardView (или RecycledView)
    * Добавить кнопки вкл./выкл. bluetooth
-
+   * Comparator для Set-a
+   * e_list расположение элементов
+     * Сверху uuid
+     * Снизу ico марки бикона
+     * Справа от ico остальные данные
+     * Везде выравнивание и шрифт monospace
+6. http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#ACTION_STATE_CHANGED
+   
 Цели
 ----
 
