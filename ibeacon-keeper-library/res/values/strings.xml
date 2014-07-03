@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <string name="ibeacon_entity__distance__far">far</string>
+   <string name="ibeacon_entity__distance__near">near</string>
+   <string name="ibeacon_entity__distance__immediate">immediate</string>
+
+</resources>

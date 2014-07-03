@@ -13,6 +13,9 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.m039.ibeacon.keeper.C;
+import com.m039.ibeacon.keeper.library.R;
+
 /**
  *
  *
@@ -23,7 +26,8 @@ import android.os.Parcelable;
  * @since
  */
 public class IBeaconEntity
-    implements Parcelable
+    implements Parcelable,
+               Comparable<IBeaconEntity>
 {
 
     public static final int PRODUCER_UNKNOWN = 0;
@@ -81,6 +85,18 @@ public class IBeaconEntity
         return mDistance;
     }
 
+    public int getDistanceStringId() {
+        if (mDistance == DISTANCE_FAR) {
+            return R.string.ibeacon_entity__distance__far;
+        } else if (mDistance == DISTANCE_NEAR) {
+            return R.string.ibeacon_entity__distance__near;
+        } else if (mDistance == DISTANCE_IMMEDIATE) {
+            return R.string.ibeacon_entity__distance__immediate;
+        }
+
+        return C.NO_ID;
+    }
+
     public long getTimestamp() {
         return mTimestamp;
     }
@@ -127,6 +143,15 @@ public class IBeaconEntity
 
         return (mIBeacon == null? 
                 lhs.mIBeacon == null : mIBeacon.equals(lhs.mIBeacon));
+    }
+
+    @Override
+    public int compareTo (IBeaconEntity another) {
+        if (!(another instanceof IBeaconEntity)) {
+            throw new ClassCastException("A IBeaconEntity object expected.");
+        }
+
+        return mIBeacon.compareTo(another.mIBeacon);
     }
 
     //

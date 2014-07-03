@@ -21,5 +21,6 @@ package com.m039.ibeacon.keeper;
 public class C {
 
     public final static boolean DEBUG = true;
+    public final static int NO_ID = 0;
 
 } // C

@@ -1,18 +1,20 @@
-/** IBeacon.java --- 
+/** IBeacon.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Author: Dmitry Mozgin <m0391n@gmail.com>
  *
- * 
+ *
  */
 
 package com.m039.ibeacon.keeper.adapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +25,13 @@ import android.widget.TextView;
 import com.m039.ibeacon.keeper.R;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 /**
- * 
  *
- * Created: 
  *
- * @author 
- * @version 
- * @since 
+ * Created:
+ *
+ * @author
+ * @version
+ * @since
  */
 public class IBeaconEntityAdapter extends BaseAdapter {
 
@@ -49,13 +51,20 @@ public class IBeaconEntityAdapter extends BaseAdapter {
 
     public boolean replace(IBeaconEntity iBeaconEntity) {
         int index = mIBeaconEntities.indexOf(iBeaconEntity);
+        boolean result = false;
 
         if (index == -1) {
-            return mIBeaconEntities.add(iBeaconEntity);
+            result = mIBeaconEntities.add(iBeaconEntity);
         } else {
             mIBeaconEntities.set(index, iBeaconEntity);
-            return true;
+            result = true;
         }
+
+        if (result) {
+            Collections.sort(mIBeaconEntities);
+        }
+
+        return result;
     }
 
     public void clear () {
@@ -84,6 +93,7 @@ public class IBeaconEntityAdapter extends BaseAdapter {
         TextView txPower;
         TextView accuracy;
         TextView distance;
+        TextView lastUpdate;
         ImageView producer;
     }
 
@@ -107,6 +117,7 @@ public class IBeaconEntityAdapter extends BaseAdapter {
             h.txPower = (TextView) v.findViewById(R.id.tx_power);
             h.accuracy = (TextView) v.findViewById(R.id.accuracy);
             h.distance = (TextView) v.findViewById(R.id.distance);
+            h.lastUpdate = (TextView) v.findViewById(R.id.last_update);
             h.producer = (ImageView) v.findViewById(R.id.producer);
 
             v.setTag(h);
@@ -119,9 +130,28 @@ public class IBeaconEntityAdapter extends BaseAdapter {
         h.minor.setText(String.valueOf(iBeaconEntity.getMinor()));
         h.txPower.setText(String.valueOf(iBeaconEntity.getTxPower()));
         h.accuracy.setText(String.format("%.2f", iBeaconEntity.getAccuracy()));
-        h.distance.setText(String.valueOf(iBeaconEntity.getDistance()));
+        h.lastUpdate.setText(getLastUpdate(iBeaconEntity));
+        h.distance.setText(iBeaconEntity.getDistanceStringId());
+        h.producer.setImageResource(getProducerDrawableId(iBeaconEntity));
 
         return v;
+    }
+
+    private static CharSequence getLastUpdate(IBeaconEntity iBeaconEntity) {
+        return DateUtils
+            .getRelativeTimeSpanString(iBeaconEntity.getLastSeenTimestamp(),
+                                       System.currentTimeMillis(),
+                                       DateUtils.SECOND_IN_MILLIS);
+    }
+
+    private static int getProducerDrawableId(IBeaconEntity iBeaconEntity) {
+        if (iBeaconEntity.getProducer() == IBeaconEntity.PRODUCER_ESTIMOTE) {
+            return R.drawable.ibeacon_entity__producer__estimote;
+        } else if (iBeaconEntity.getProducer() == IBeaconEntity.PRODUCER_KONTAKT) {
+            return R.drawable.ibeacon_entity__producer__kontakt;
+        } else {
+            return R.drawable.ibeacon_entity__producer__unknown;
+        }
     }
 
 } // IBeaconEntityAdapter

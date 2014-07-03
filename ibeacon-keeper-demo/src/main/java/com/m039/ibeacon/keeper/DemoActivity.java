@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,12 +17,38 @@ import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
 public class DemoActivity extends Activity {
 
     public static final String TAG = "m039";
-    public static final int REQUEST_CODE = 0;
+    public static final int WHAT_UPDATE = 0;
 
     private TextView mText;
     private ListView mList;
 
-    IBeaconEntityAdapter mIBeaconEntityAdapter = new IBeaconEntityAdapter();
+    private IBeaconEntityAdapter mIBeaconEntityAdapter = 
+        new IBeaconEntityAdapter();
+
+    private boolean mBleEnabled = false;
+
+    Handler mHandler = new Handler() {
+            @Override
+            public void handleMessage (Message msg) {
+                if (msg.what == WHAT_UPDATE) {
+                    onUpdate();
+                    sendEmptyMessageDelayed(msg.what, 500);
+                }
+            }
+
+            void onUpdate() {
+                if (mText != null) {
+                    if (mBleEnabled) {
+                        mText.setText(R.string.a_demo__ble_enabled);
+                    } else {
+                        mText.setText(R.string.a_demo__ble_disabled);
+                        mIBeaconEntityAdapter.clear();
+                    }
+                }
+
+                mIBeaconEntityAdapter.notifyDataSetChanged();
+            }
+        };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,24 +68,16 @@ public class DemoActivity extends Activity {
             @Override
             protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
                 mIBeaconEntityAdapter.replace(iBeaconEntity);
-                mIBeaconEntityAdapter.notifyDataSetChanged();
             }
 
             @Override
             protected void onBleEnabled() {
-                if (mText != null) {
-                    mText.setText(R.string.a_demo__ble_enabled);
-                }
+                mBleEnabled = true;
             }
 
             @Override
             protected void onBleDisabled() {
-                if (mText != null) {
-                    mText.setText(R.string.a_demo__ble_disabled);
-                }
-
-                mIBeaconEntityAdapter.clear();
-                mIBeaconEntityAdapter.notifyDataSetChanged();
+                mBleEnabled = false;
             }
         };
 
@@ -67,12 +87,22 @@ public class DemoActivity extends Activity {
         super.onStart();
 
         IBeaconReceiver.registerReceiver(this, mIBeaconReceiver);
+        startHandleMessages();
+    }
+
+    void startHandleMessages() {
+        mHandler.sendEmptyMessage(WHAT_UPDATE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
+        stopHandleMessages();
         IBeaconReceiver.unregisterReceiver(this, mIBeaconReceiver);
+    }
+
+    void stopHandleMessages() {
+        mHandler.removeMessages(WHAT_UPDATE);
     }
 }

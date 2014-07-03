@@ -12,9 +12,9 @@ package com.m039.ibeacon.keeper.util;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.util.Log;
 
 import com.m039.ibeacon.keeper.U;
+import com.m039.ibeacon.keeper.L;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.content.IBeaconFactory;
 
@@ -57,7 +57,7 @@ public class SimpleLeScanner {
             }
         }
 
-        Log.wtf(TAG, "Failed to startScan");
+        L.wtf(TAG, "Failed to startScan");
 
         return false;
     }
@@ -69,7 +69,7 @@ public class SimpleLeScanner {
             onStopScan();
             mIsScanning = false;
         } else {
-            Log.wtf(TAG, "Failed to stopScan");
+            L.wtf(TAG, "Failed to stopScan");
         }
     }
 

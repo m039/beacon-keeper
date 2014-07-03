@@ -31,5 +31,13 @@ public class L {
 
         return -1;
     }
+
+    public static int wtf(String tag, String msg) {
+        if (C.DEBUG) {
+            return Log.wtf(tag, msg);
+        }
+
+        return -1;
+    }
     
 } // L

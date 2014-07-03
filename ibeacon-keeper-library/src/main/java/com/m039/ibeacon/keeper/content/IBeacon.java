@@ -1,10 +1,10 @@
-/** IBeacon.java --- 
+/** IBeacon.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Author: Dmitry Mozgin <m0391n@gmail.com>
  *
- * 
+ *
  */
 
 package com.m039.ibeacon.keeper.content;
@@ -13,24 +13,32 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 
+ *
  *
  * Created: 07/01/14
  *
  * @author Dmitry Mozgin
- * @version 
- * @since 
+ * @version
+ * @since
  */
-public final class IBeacon 
-    implements Parcelable
+public final class IBeacon
+    implements Parcelable,
+               Comparable<IBeacon>
 {
-    
+
     protected String    mProximityUuid;
     protected int       mMajor;
     protected int       mMinor;
     protected int       mTxPower;
 
     protected IBeacon() {
+    }
+
+    public IBeacon(String proximityUuid, int major, int minor, int txPower) {
+        mProximityUuid = proximityUuid;
+        mMajor = major;
+        mMinor = minor;
+        mTxPower = txPower;
     }
 
     public String getProximityUuid() {
@@ -49,7 +57,7 @@ public final class IBeacon
         return mTxPower;
     }
 
-    @Override 
+    @Override
     public int hashCode() {
         int result = 17;
 
@@ -74,7 +82,7 @@ public final class IBeacon
 
         IBeacon lhs = (IBeacon) o;
 
-        return (mProximityUuid == null? 
+        return (mProximityUuid == null?
                 lhs.mProximityUuid == null : mProximityUuid.equalsIgnoreCase(lhs.mProximityUuid)) &&
             mMajor == lhs.mMajor &&
             mMinor == lhs.mMinor;
@@ -86,33 +94,54 @@ public final class IBeacon
                              mProximityUuid, mMajor, mMinor, mTxPower);
     }
 
+    @Override
+    public int compareTo (IBeacon another) {
+        if (!(another instanceof IBeacon)) {
+            throw new ClassCastException("A IBeacon object expected.");
+        }
+        
+        int compare;
+
+        compare = mProximityUuid.compareTo(another.mProximityUuid);
+        if (compare != 0) {
+            return compare;
+        }
+
+        compare = Integer.compare(mMajor, another.mMajor);
+        if (compare != 0) {
+            return compare;
+        }
+
+        return Integer.compare(mMinor, another.mMinor);
+    }
+
     //
     // Parcelable
     //
-    
+
     private IBeacon(Parcel in) {
         mProximityUuid = in.readString();
         mMajor = in.readInt();
         mMinor = in.readInt();
         mTxPower = in.readInt();
     }
-    
+
     public int describeContents() {
         return 0;
     }
-    
+
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(mProximityUuid);
         out.writeInt(mMajor);
         out.writeInt(mMinor);
         out.writeInt(mTxPower);
     }
-    
+
     public static final Parcelable.Creator<IBeacon> CREATOR = new Parcelable.Creator<IBeacon>() {
             public IBeacon createFromParcel(Parcel in) {
                 return new IBeacon(in);
             }
-            
+
             public IBeacon[] newArray(int size) {
                 return new IBeacon[size];
             }
