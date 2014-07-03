@@ -5,15 +5,15 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.m039.ibeacon</groupId>
+  <groupId>com.m039.ibeacon.keeper</groupId>
   <artifactId>parent</artifactId>
   <version>1.0.0</version>
 
   <packaging>pom</packaging>
 
   <modules>
-    <module>ibeacon-sdk-library</module>
-    <module>ibeacon-sdk-demo</module>
+    <module>ibeacon-keeper-library</module>
+    <module>ibeacon-keeper-demo</module>
   </modules>
 
   <properties>
