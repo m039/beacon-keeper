@@ -6,4 +6,6 @@
 
   <string name="app_name">IBeacon sdk demo</string>
 
+  <string name="main__on_empty">No iBeacons</string>
+
 </resources>

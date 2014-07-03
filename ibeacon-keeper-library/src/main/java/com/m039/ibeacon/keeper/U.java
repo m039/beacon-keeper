@@ -16,7 +16,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
+
+import com.m039.ibeacon.keeper.content.IBeaconEntity;
 
 /**
  * 
@@ -109,6 +112,13 @@ public class U {
                 return (0.89976f) * (float) Math.pow(ratio, 7.7095f) + 0.111f;    
             }
         }   
+
+        public static CharSequence getLastUpdate(IBeaconEntity iBeaconEntity) {
+            return DateUtils
+                .getRelativeTimeSpanString(iBeaconEntity.getLastSeenTimestamp(),
+                                           System.currentTimeMillis(),
+                                           DateUtils.SECOND_IN_MILLIS);
+        }
     }
 
     public static BluetoothManager getBluetoothManager(Context ctx) {

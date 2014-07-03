@@ -1,23 +1,22 @@
-package com.m039.ibeacon.keeper;
+package com.m039.ibeacon.keeper.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.m039.ibeacon.keeper.R;
 import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
 
 @SuppressLint("UseSparseArrays")
-public class DemoActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     public static final String TAG = "m039";
-    public static final int WHAT_UPDATE = 0;
 
     private TextView mText;
     private ListView mList;
@@ -25,41 +24,32 @@ public class DemoActivity extends Activity {
     private IBeaconEntityAdapter mIBeaconEntityAdapter = 
         new IBeaconEntityAdapter();
 
-    private boolean mBleEnabled = false;
-
-    Handler mHandler = new Handler() {
-            @Override
-            public void handleMessage (Message msg) {
-                if (msg.what == WHAT_UPDATE) {
-                    onUpdate();
-                    sendEmptyMessageDelayed(msg.what, 500);
-                }
-            }
-
-            void onUpdate() {
-                if (mText != null) {
-                    if (mBleEnabled) {
-                        mText.setText(R.string.a_demo__ble_enabled);
-                    } else {
-                        mText.setText(R.string.a_demo__ble_disabled);
-                        mIBeaconEntityAdapter.clear();
-                    }
-                }
-
-                mIBeaconEntityAdapter.notifyDataSetChanged();
-            }
-        };
+    private boolean mBleEnabled = false;    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_demo);
+        setContentView(R.layout.a_main);
 
         mText = (TextView) findViewById(R.id.text);
         mList = (ListView) findViewById(R.id.list);
 
         if (mList != null) {
             mList.setAdapter(mIBeaconEntityAdapter);
+            mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                        final IBeaconEntity iBeaconEntity = (IBeaconEntity) parent
+                             .getItemAtPosition(position);
+
+                        IBeaconInfoActivity.startActivity(parent.getContext(), iBeaconEntity);
+                    }
+                });
+
+            View onEmpty = findViewById(R.id.on_empty);
+            if (onEmpty != null) {
+                mList.setEmptyView(onEmpty);
+            }
         }
     }
 
@@ -81,28 +71,31 @@ public class DemoActivity extends Activity {
             }
         };
 
+    @Override
+    protected void onPeriodicUpdate() {
+        if (mText != null) {
+            if (mBleEnabled) {
+                mText.setText(R.string.a_demo__ble_enabled);
+            } else {
+                mText.setText(R.string.a_demo__ble_disabled);
+                mIBeaconEntityAdapter.clear();
+            }
+        }
+
+        mIBeaconEntityAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
 
         IBeaconReceiver.registerReceiver(this, mIBeaconReceiver);
-        startHandleMessages();
-    }
-
-    void startHandleMessages() {
-        mHandler.sendEmptyMessage(WHAT_UPDATE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        stopHandleMessages();
         IBeaconReceiver.unregisterReceiver(this, mIBeaconReceiver);
-    }
-
-    void stopHandleMessages() {
-        mHandler.removeMessages(WHAT_UPDATE);
     }
 }

@@ -14,12 +14,14 @@
                android:label="@string/app_name"
                android:name="com.m039.ibeacon.keeper.app.MainApplication">
 
-    <activity android:name="com.m039.ibeacon.keeper.DemoActivity">
+    <activity android:name="com.m039.ibeacon.keeper.activity.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <activity android:name="com.m039.ibeacon.keeper.activity.IBeaconInfoActivity" />
 
     <service android:name="com.m039.ibeacon.keeper.service.IBeaconService"/>
 

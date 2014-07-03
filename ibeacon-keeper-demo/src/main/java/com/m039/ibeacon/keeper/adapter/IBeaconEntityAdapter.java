@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.m039.ibeacon.keeper.R;
+import com.m039.ibeacon.keeper.U;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
+
 /**
  *
  *
@@ -130,18 +131,11 @@ public class IBeaconEntityAdapter extends BaseAdapter {
         h.minor.setText(String.valueOf(iBeaconEntity.getMinor()));
         h.txPower.setText(String.valueOf(iBeaconEntity.getTxPower()));
         h.accuracy.setText(String.format("%.2f", iBeaconEntity.getAccuracy()));
-        h.lastUpdate.setText(getLastUpdate(iBeaconEntity));
+        h.lastUpdate.setText(U.IBeacon.getLastUpdate(iBeaconEntity));
         h.distance.setText(iBeaconEntity.getDistanceStringId());
         h.producer.setImageResource(getProducerDrawableId(iBeaconEntity));
 
         return v;
-    }
-
-    private static CharSequence getLastUpdate(IBeaconEntity iBeaconEntity) {
-        return DateUtils
-            .getRelativeTimeSpanString(iBeaconEntity.getLastSeenTimestamp(),
-                                       System.currentTimeMillis(),
-                                       DateUtils.SECOND_IN_MILLIS);
     }
 
     private static int getProducerDrawableId(IBeaconEntity iBeaconEntity) {

@@ -15,11 +15,27 @@
       android:textSize="18sp"
       />
 
-  <ListView
-      android:id="@+id/list"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      >
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <TextView 
+        android:id="@+id/on_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/main__on_empty"
+        />
+
+  </FrameLayout>
 
 </LinearLayout>
 

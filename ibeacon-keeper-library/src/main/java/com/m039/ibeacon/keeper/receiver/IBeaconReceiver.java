@@ -44,6 +44,14 @@ public class IBeaconReceiver extends BroadcastReceiver
         ctx.unregisterReceiver(br);
     }
 
+    public Intent registerReceiver(Context ctx) {
+        return registerReceiver(ctx, this);
+    }
+
+    public void unregisterReceiver(Context ctx) {
+        unregisterReceiver(ctx, this);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
