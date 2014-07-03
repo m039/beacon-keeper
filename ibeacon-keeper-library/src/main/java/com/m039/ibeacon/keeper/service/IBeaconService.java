@@ -12,15 +12,14 @@ package com.m039.ibeacon.keeper.service;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.m039.ibeacon.keeper.content.IBeacon;
-import com.m039.ibeacon.keeper.library.R;
 import com.m039.ibeacon.keeper.U;
+import com.m039.ibeacon.keeper.content.IBeaconEntity;
+import com.m039.ibeacon.keeper.library.R;
 import com.m039.ibeacon.keeper.util.SimpleLeScanner;
 
 /**
@@ -42,7 +41,7 @@ public class IBeaconService extends Service {
     public static final String ACTION_BLE_DISABLED = PACKAGE + "action.BLE_DISABLED";
     public static final String ACTION_BLE_ENABLED = PACKAGE + "action.BLE_ENABLED";
 
-    public static final String EXTRA_BEACON = PACKAGE + "extra.beacon";
+    public static final String EXTRA_IBEACON_ENTITY = PACKAGE + "extra.ibeacon_entity";
 
     public static final String META_SCANNING_TIME_MS = "scanning_time_ms";
 
@@ -79,8 +78,8 @@ public class IBeaconService extends Service {
     private SimpleLeScanner mSimpleLeScanner = null;
     private SimpleLeScanner.LeScanCallback mLeScanCallback = new SimpleLeScanner.LeScanCallback() {
             @Override
-            public void onLeScan(BluetoothDevice device, int rssi, IBeacon ibeacon) {
-                sendFoundBeaconBroadcast(ibeacon);
+            public void onLeScan(IBeaconEntity iBeaconEntity) {
+                sendFoundBeaconBroadcast(iBeaconEntity);
             }
         };
 
@@ -118,11 +117,11 @@ public class IBeaconService extends Service {
         mSimpleLeScanner = null;
     }
 
-    private void sendFoundBeaconBroadcast(IBeacon ibeacon) {
+    private void sendFoundBeaconBroadcast(IBeaconEntity iBeaconEntity) {
         Intent intent = new Intent();
         intent.setAction(ACTION_FOUND_IBEACON);
         intent.setPackage(getPackageName());
-        intent.putExtra(EXTRA_BEACON, ibeacon);
+        intent.putExtra(EXTRA_IBEACON_ENTITY, iBeaconEntity);
         sendBroadcast(intent); 
     }
 

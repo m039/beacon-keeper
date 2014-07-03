@@ -1,30 +1,32 @@
-/** IBeaconFactory.java --- 
+/** IBeaconFactory.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Author: Dmitry Mozgin <m0391n@gmail.com>
  *
- * 
+ *
  */
 
 package com.m039.ibeacon.keeper.content;
 
 import java.util.Arrays;
 
+import android.bluetooth.BluetoothDevice;
+
 /**
- * 
+ *
  *
  * Created: 07/01/14
  *
  * @author Dmitry Mozgin
- * @version 
- * @since 
+ * @version
+ * @since
  */
 public class IBeaconFactory {
 
     private static byte[] IBEACON_PREFIX = new byte[] {
         (byte) 0x02, (byte) 0x01, (byte) 0x06, (byte) 0x1a,
-        (byte) 0xff, (byte) 0x4c, (byte) 0x00, (byte) 0x02, 
+        (byte) 0xff, (byte) 0x4c, (byte) 0x00, (byte) 0x02,
         (byte) 0x15
     };
 
@@ -52,15 +54,15 @@ public class IBeaconFactory {
 
     /**
      * @param scanRecord the actual packet bytes
-     * @return null or an instance of of an <code>IBeacon</code>
+     * @return null or an instance of an <code>IBeacon</code>
      */
     public static IBeacon decodeScanRecord(byte[] scanRecord) {
         if (scanRecord != null && scanRecord.length >= SCANRECORD_SIZE) {
 
-            byte ibeaconPrefix[] = Arrays
+            byte iBeaconPrefix[] = Arrays
                 .copyOfRange(scanRecord, IBEACON_PREFIX_START, IBEACON_PREFIX_END);
 
-            if (!Arrays.equals(ibeaconPrefix, IBEACON_PREFIX)) {
+            if (!Arrays.equals(iBeaconPrefix, IBEACON_PREFIX)) {
                 return null;
             }
 
@@ -73,17 +75,41 @@ public class IBeaconFactory {
             byte txPower[] = Arrays
                 .copyOfRange(scanRecord, TX_POWER_START, TX_POWER_END);
 
-            IBeacon ibeacon = new IBeacon();
+            IBeacon iBeacon = new IBeacon();
 
-            ibeacon.mProximityUuid = toProximityUuidString(proximityUuid);
-            ibeacon.mMajor = (major[0] & 0xff) * 0x100 + (major[1] & 0xff);
-            ibeacon.mMinor = (minor[0] & 0xff) * 0x100 + (minor[1] & 0xff);
-            ibeacon.mTxPower = txPower[0];            
+            iBeacon.mProximityUuid = toProximityUuidString(proximityUuid);
+            iBeacon.mMajor = (major[0] & 0xff) * 0x100 + (major[1] & 0xff);
+            iBeacon.mMinor = (minor[0] & 0xff) * 0x100 + (minor[1] & 0xff);
+            iBeacon.mTxPower = txPower[0];
 
-            return ibeacon;
+            return iBeacon;
         }
 
         return null;
+    }
+
+    /**
+     * @param device
+     * @param rssi
+     * @param scanRecord the actiual packet bytes
+     * @return null or an instance of an <code>IBeaconEntity</code>
+     * @see android.bluetooth.BluetoothAdapter.LeScanCallback
+     */
+    public static IBeaconEntity decode(BluetoothDevice device, int rssi, byte[] scanRecord) {
+        IBeacon iBeacon = decodeScanRecord(scanRecord);
+        if (iBeacon == null) {
+            return null;
+        }
+
+        IBeaconEntity iBeaconEntity = new IBeaconEntity(iBeacon);
+
+        fillProducer(iBeaconEntity);
+        fillTimestamp(iBeaconEntity);
+
+        iBeaconEntity.mBluetoothDevice = device;
+        iBeaconEntity.mRssi = rssi;
+
+        return iBeaconEntity;
     }
 
     private static String toProximityUuidString(byte proximityUuid[]) {
@@ -98,7 +124,7 @@ public class IBeaconFactory {
         for (int i = 0; i < 4; i++) {
             sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
         }
-        
+
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
@@ -124,6 +150,24 @@ public class IBeaconFactory {
         }
 
         return sb.toString();
+    }
+
+    public static void fillProducer(IBeaconEntity iBeaconEntity) {
+        int producer = IBeaconEntity.PRODUCER_UNKNOWN;
+
+        String proximityUuid = iBeaconEntity.getProximityUuid();
+
+        if (proximityUuid.equalsIgnoreCase("b9407f30-f5f8-466e-aff9-25556b57fe6d")) {
+            producer = IBeaconEntity.PRODUCER_ESTIMOTE;
+        } else if (proximityUuid.equalsIgnoreCase("f7826da6-4fa2-4e98-8024-bc5b71e0893e")) {
+            producer = IBeaconEntity.PRODUCER_KONTAKT;
+        }
+
+        iBeaconEntity.mProducer = producer;
+    }
+
+    public static void fillTimestamp(IBeaconEntity iBeaconEntity) {
+        iBeaconEntity.mTimestamp = System.currentTimeMillis();
     }
 
 } // IBeaconFactory

@@ -13,9 +13,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
-import com.m039.ibeacon.keeper.content.IBeacon;
+import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.service.IBeaconService;
 
 /**
@@ -50,7 +49,8 @@ public class IBeaconReceiver extends BroadcastReceiver
         String action = intent.getAction();
 
         if (action.equals(IBeaconService.ACTION_FOUND_IBEACON)) {
-            onFoundIBeacon((IBeacon) intent.getParcelableExtra(IBeaconService.EXTRA_BEACON));
+            onFoundIBeacon((IBeaconEntity) intent
+                           .getParcelableExtra(IBeaconService.EXTRA_IBEACON_ENTITY));
         } else if (action.equals(IBeaconService.ACTION_BLE_ENABLED)) {
             onBleEnabled();
         } else if (action.equals(IBeaconService.ACTION_BLE_DISABLED)) {
@@ -58,14 +58,16 @@ public class IBeaconReceiver extends BroadcastReceiver
         }
     }
 
-    protected void onFoundIBeacon(IBeacon ibeacon) {
-        Log.d(TAG, "IBeaconReceiver.onFoundIBeacon ibeacon : " + ibeacon);
+    protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
+        // log
     }
 
     protected void onBleEnabled() {
+        // log
     }
 
     protected void onBleDisabled() {
+        // log
     }
 
 } // IBeaconReceiver

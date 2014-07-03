@@ -1,5 +1,7 @@
 package com.m039.ibeacon.keeper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.m039.ibeacon.keeper.content.IBeacon;
+import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
 
 @SuppressLint("UseSparseArrays")
@@ -42,22 +44,24 @@ public class DemoActivity extends Activity {
     }
 
     private BroadcastReceiver mIBeaconReceiver = new IBeaconReceiver() {
-            
+
             @SuppressWarnings("unchecked")
-			@Override
-            protected void onFoundIBeacon(IBeacon ibeacon) {
-                mReceivedData.put(ibeacon.hashCode(),
-                                  String.format("ibeacon %x\n" +
+            @Override
+            protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
+                mReceivedData.put(iBeaconEntity.hashCode(),
+                                  String.format("iBeaconEntity %x\n" +
                                                 "proximityUuid: %s\n" +
                                                 "major: %s\n" +
                                                 "minor: %s\n" +
-                                                "txPower: %s",
-                                                ibeacon.hashCode(),
-                                                ibeacon.getProximityUuid(),
-                                                ibeacon.getMajor(),
-                                                ibeacon.getMinor(),
-                                                ibeacon.getTxPower()));
-                
+                                                "txPower: %s\n" +
+                                                "producer: %s",
+                                                iBeaconEntity.hashCode(),
+                                                iBeaconEntity.getProximityUuid(),
+                                                iBeaconEntity.getMajor(),
+                                                iBeaconEntity.getMinor(),
+                                                iBeaconEntity.getTxPower(),
+                                                iBeaconEntity.getProducer()));
+
                 if (mList != null) {
                     ArrayAdapter<String> adapter = (ArrayAdapter<String>) mList.getAdapter();
                     if (adapter != null) {
@@ -74,9 +78,9 @@ public class DemoActivity extends Activity {
                     mText.setText(R.string.a_demo__ble_enabled);
                 }
             }
-            
+
             @SuppressWarnings("unchecked")
-			@Override
+            @Override
             protected void onBleDisabled() {
                 if (mText != null) {
                     mText.setText(R.string.a_demo__ble_disabled);

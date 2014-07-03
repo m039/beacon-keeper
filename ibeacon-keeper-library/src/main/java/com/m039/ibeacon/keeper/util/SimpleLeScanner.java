@@ -15,7 +15,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.m039.ibeacon.keeper.U;
-import com.m039.ibeacon.keeper.content.IBeacon;
+import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.content.IBeaconFactory;
 
 /**
@@ -31,22 +31,22 @@ public class SimpleLeScanner {
 
     public static final String TAG = "m039-SimpleLeScanner";
 
-    public static abstract class LeScanCallback 
+    public static abstract class LeScanCallback
         implements BluetoothAdapter.LeScanCallback {
         @Override
         public void onLeScan (BluetoothDevice device, int rssi, byte[] scanRecord) {
-            IBeacon ibeacon = IBeaconFactory.decodeScanRecord(scanRecord);
-            if (ibeacon != null) {
-                onLeScan(device, rssi, ibeacon);
+            IBeaconEntity iBeaconEntity = IBeaconFactory.decode(device, rssi, scanRecord);
+            if (iBeaconEntity != null) {
+                onLeScan(iBeaconEntity);
             }
         }
 
-        public abstract void onLeScan(BluetoothDevice device, int rssi, IBeacon ibeacon);
+        public abstract void onLeScan(IBeaconEntity iBeaconEntity);
     }
 
     private boolean mIsScanning = false;
 
-    public boolean startScan(final Context ctx, final LeScanCallback callback) {
+    public boolean startScan(Context ctx, LeScanCallback callback) {
         BluetoothAdapter ba = U.getBluetoothAdapter(ctx);
         if (ba != null && ba.isEnabled() && !mIsScanning) {
             if (ba.startLeScan(callback)) {
