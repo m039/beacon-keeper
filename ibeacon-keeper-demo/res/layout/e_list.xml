@@ -1,9 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="10sp"
-    android:typeface="monospace"
-    />
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="proxmityUuid:"
+      android:textSize="10sp"
+      android:typeface="monospace"
+      />
+
+  <TextView
+      android:id="@+id/proximity_uuid"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="10sp"
+      android:typeface="monospace"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          android:text="major:"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          android:text="minor:"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          android:text="txPower:"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          android:text="accuracy:"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          android:text="distance:"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/major"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          />
+
+      <TextView
+          android:id="@+id/minor"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          />
+
+      <TextView
+          android:id="@+id/tx_power"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          />
+
+      <TextView
+          android:id="@+id/accuracy"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          />
+
+      <TextView
+          android:id="@+id/distance"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="10sp"
+          android:typeface="monospace"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/producer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="10sp"
+      android:typeface="monospace"
+      />  
+
+</LinearLayout>
+
+

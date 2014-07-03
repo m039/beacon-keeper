@@ -96,6 +96,21 @@ public class U {
         }
     }
 
+    public static class IBeacon {
+        public static float calculateAccuracy(int txPower, int rssi) {
+            if (rssi == 0) {
+                return -1.0f;
+            }
+
+            float ratio = (float) rssi / (float) txPower;
+            if (ratio < 1.0) {
+                return (float) Math.pow(ratio, 10);
+            } else {
+                return (0.89976f) * (float) Math.pow(ratio, 7.7095f) + 0.111f;    
+            }
+        }   
+    }
+
     public static BluetoothManager getBluetoothManager(Context ctx) {
         return (BluetoothManager) ctx.getSystemService(Context.BLUETOOTH_SERVICE);
     }

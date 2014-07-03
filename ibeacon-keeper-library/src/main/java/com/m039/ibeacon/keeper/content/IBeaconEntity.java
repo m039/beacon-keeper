@@ -30,12 +30,20 @@ public class IBeaconEntity
     public static final int PRODUCER_ESTIMOTE = 1;
     public static final int PRODUCER_KONTAKT = 2;
 
+    public static final int DISTANCE_FAR = 0;
+    public static final int DISTANCE_NEAR = 1;
+    public static final int DISTANCE_IMMEDIATE = 2;
+
     final protected IBeacon mIBeacon;
 
     protected int mProducer = PRODUCER_UNKNOWN;
     protected long mTimestamp = -1;
     protected BluetoothDevice mBluetoothDevice;
-    protected int mRssi;
+    protected int mRssi = 0;
+    protected int mDistance = DISTANCE_FAR;
+    protected float mAccuracy = -1.0f;
+
+    protected byte[] mScanDataDebug = null;
 
     public IBeaconEntity(IBeacon iBeacon) {
         if (iBeacon == null) {
@@ -69,6 +77,10 @@ public class IBeaconEntity
         return mProducer;
     }
 
+    public int getDistance() {
+        return mDistance;
+    }
+
     public long getTimestamp() {
         return mTimestamp;
     }
@@ -83,6 +95,17 @@ public class IBeaconEntity
 
     public int getRssi() {
         return mRssi;
+    }
+
+    public float getAccuracy() {
+        return mAccuracy;
+    }
+
+    /**
+     * @return scanData if C.DEBUG is true
+     */
+    public byte[] getScanDataDebug() {
+        return mScanDataDebug;
     }
 
     @Override
@@ -115,7 +138,9 @@ public class IBeaconEntity
         mBluetoothDevice = (BluetoothDevice) in.readParcelable(BluetoothDevice.class.getClassLoader());
         mProducer = in.readInt();
         mRssi = in.readInt();
+        mDistance = in.readInt();
         mTimestamp = in.readLong();
+        mAccuracy = in.readFloat();
     }
 
     public int describeContents() {
@@ -127,7 +152,9 @@ public class IBeaconEntity
         out.writeParcelable(mBluetoothDevice, flags);
         out.writeInt(mProducer);
         out.writeInt(mRssi);
+        out.writeInt(mDistance);
         out.writeLong(mTimestamp);
+        out.writeFloat(mAccuracy);
     }
 
     public static final Parcelable.Creator<IBeaconEntity> CREATOR = new Parcelable.Creator<IBeaconEntity>() {

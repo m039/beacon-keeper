@@ -13,6 +13,9 @@ import java.util.Arrays;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.m039.ibeacon.keeper.C;
+import com.m039.ibeacon.keeper.U;
+
 /**
  *
  *
@@ -103,11 +106,15 @@ public class IBeaconFactory {
 
         IBeaconEntity iBeaconEntity = new IBeaconEntity(iBeacon);
 
+        iBeaconEntity.mBluetoothDevice = device;
+
         fillProducer(iBeaconEntity);
         fillTimestamp(iBeaconEntity);
+        fillRssi(iBeaconEntity, rssi);
 
-        iBeaconEntity.mBluetoothDevice = device;
-        iBeaconEntity.mRssi = rssi;
+        if (C.DEBUG) {
+            iBeaconEntity.mScanDataDebug = Arrays.copyOf(scanRecord, scanRecord.length);
+        }
 
         return iBeaconEntity;
     }
@@ -152,7 +159,7 @@ public class IBeaconFactory {
         return sb.toString();
     }
 
-    public static void fillProducer(IBeaconEntity iBeaconEntity) {
+    private static void fillProducer(IBeaconEntity iBeaconEntity) {
         int producer = IBeaconEntity.PRODUCER_UNKNOWN;
 
         String proximityUuid = iBeaconEntity.getProximityUuid();
@@ -166,8 +173,21 @@ public class IBeaconFactory {
         iBeaconEntity.mProducer = producer;
     }
 
-    public static void fillTimestamp(IBeaconEntity iBeaconEntity) {
+    private static void fillTimestamp(IBeaconEntity iBeaconEntity) {
         iBeaconEntity.mTimestamp = System.currentTimeMillis();
+    }
+
+    private static void fillRssi(IBeaconEntity iBeaconEntity, int rssi) {
+        iBeaconEntity.mRssi = rssi;
+        iBeaconEntity.mAccuracy = U.IBeacon.calculateAccuracy(iBeaconEntity.getTxPower(), rssi);
+
+        if (iBeaconEntity.mAccuracy < 1) {
+            iBeaconEntity.mDistance = IBeaconEntity.DISTANCE_IMMEDIATE;
+        } else if (iBeaconEntity.mAccuracy > 10) {
+            iBeaconEntity.mDistance = IBeaconEntity.DISTANCE_FAR;
+        } else {
+            iBeaconEntity.mDistance = IBeaconEntity.DISTANCE_NEAR;
+        }
     }
 
 } // IBeaconFactory

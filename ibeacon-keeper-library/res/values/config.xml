@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-   <integer name="beacon_service__scanning_time_ms">500</integer>
-   <integer name="beacon_service__idle_time_ms">2000</integer>
+   <integer name="beacon_service__scanning_time_ms">1000</integer>
+   <integer name="beacon_service__idle_time_ms">1000</integer>
 
 </resources>
