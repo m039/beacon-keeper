@@ -76,6 +76,16 @@ public class U {
             BluetoothAdapter ba = getBluetoothAdapter(ctx);
             return ba != null && ba.isEnabled();
         }
+
+        public static boolean enable(Context ctx) {
+            BluetoothAdapter ba = getBluetoothAdapter(ctx);
+            return ba != null && ba.enable();
+        }
+
+        public static boolean disable(Context ctx) {
+            BluetoothAdapter ba = getBluetoothAdapter(ctx);
+            return ba != null && ba.disable();
+        }
         
         public static Intent createRequestEnableIntent() {
             return new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);

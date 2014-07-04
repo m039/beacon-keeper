@@ -43,7 +43,7 @@ public class IBeaconEntityAdapter
     private List<IBeaconEntity> mIBeaconEntities;
 
     public IBeaconEntityAdapter() {
-        mIBeaconEntities = new ArrayList<IBeaconEntity>();
+        this(new ArrayList<IBeaconEntity>());
     }
 
     public IBeaconEntityAdapter(List<IBeaconEntity> iBeaconEntities) {

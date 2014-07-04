@@ -9,6 +9,7 @@
 
 package com.m039.ibeacon.keeper.receiver;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +35,7 @@ public class IBeaconReceiver extends BroadcastReceiver
         IntentFilter filter = new IntentFilter();
 
         filter.addAction(IBeaconService.ACTION_FOUND_IBEACON);
-        filter.addAction(IBeaconService.ACTION_BLE_ENABLED);
-        filter.addAction(IBeaconService.ACTION_BLE_DISABLED);
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
 
         return ctx.registerReceiver(br, filter);
     }
@@ -59,10 +59,11 @@ public class IBeaconReceiver extends BroadcastReceiver
         if (action.equals(IBeaconService.ACTION_FOUND_IBEACON)) {
             onFoundIBeacon((IBeaconEntity) intent
                            .getParcelableExtra(IBeaconService.EXTRA_IBEACON_ENTITY));
-        } else if (action.equals(IBeaconService.ACTION_BLE_ENABLED)) {
-            onBleEnabled();
-        } else if (action.equals(IBeaconService.ACTION_BLE_DISABLED)) {
-            onBleDisabled();
+        } else if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+            if (state != -1) {
+                onBluetoothStateChanged(state);
+            }
         }
     }
 
@@ -70,12 +71,10 @@ public class IBeaconReceiver extends BroadcastReceiver
         // log
     }
 
-    protected void onBleEnabled() {
-        // log
-    }
-
-    protected void onBleDisabled() {
-        // log
+    /**
+     * @see android.bluetooth.BluetoothAdapter#ACTION_STATE_CHANGED
+     */
+    protected void onBluetoothStateChanged(int state) {
     }
 
 } // IBeaconReceiver

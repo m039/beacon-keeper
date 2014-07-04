@@ -10,10 +10,6 @@
 Todo
 ====
 
-1. Правки по демке со списком
-   * Добавить кнопки вкл./выкл. bluetooth
-2. http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#ACTION_STATE_CHANGED
-
 Цели
 ----
 

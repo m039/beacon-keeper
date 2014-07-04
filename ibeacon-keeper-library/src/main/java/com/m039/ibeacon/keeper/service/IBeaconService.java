@@ -87,12 +87,6 @@ public class IBeaconService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        if (U.BLE.isEnabled(this)) {
-            sendBleEnabledBroadcast();
-        } else {
-            sendBleDisabledBroadcast();
-        }
-
         mSimpleLeScanner = new SimpleLeScanner();
         if (mSimpleLeScanner.startScan(this, mLeScanCallback)) {
             mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
@@ -122,20 +116,6 @@ public class IBeaconService extends Service {
         intent.setAction(ACTION_FOUND_IBEACON);
         intent.setPackage(getPackageName());
         intent.putExtra(EXTRA_IBEACON_ENTITY, iBeaconEntity);
-        sendBroadcast(intent); 
-    }
-
-    private void sendBleEnabledBroadcast() {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_BLE_ENABLED);
-        intent.setPackage(getPackageName());
-        sendBroadcast(intent); 
-    }
-    
-    private void sendBleDisabledBroadcast() {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_BLE_DISABLED);
-        intent.setPackage(getPackageName());
         sendBroadcast(intent); 
     }
 

@@ -1,6 +1,7 @@
 package com.m039.ibeacon.keeper.activity;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.m039.ibeacon.keeper.R;
+import com.m039.ibeacon.keeper.U;
 import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
+import com.m039.ibeacon.keeper.fragment.BluetoothEnableButtonFragment;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
 
 @SuppressLint("UseSparseArrays")
@@ -20,6 +23,7 @@ public class MainActivity extends BaseActivity {
 
     private TextView mText;
     private RecyclerView mRecycler;
+    private boolean mBleEnabled = false;    
 
     private IBeaconEntityAdapter mIBeaconEntityAdapter = 
         new IBeaconEntityAdapter() {
@@ -28,8 +32,6 @@ public class MainActivity extends BaseActivity {
                 IBeaconInfoActivity.startActivity(MainActivity.this, iBeaconEntity);
             }
         };
-
-    private boolean mBleEnabled = false;    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,13 @@ public class MainActivity extends BaseActivity {
             mRecycler.setItemAnimator(new DefaultItemAnimator());
             mRecycler.setAdapter(mIBeaconEntityAdapter);
         }
+
+        if (savedInstanceState == null) {
+            getFragmentManager()
+                .beginTransaction()
+                .add(R.id.bluetooth_enable, BluetoothEnableButtonFragment.newInstance())
+                .commit();
+        }
     }
 
     private BroadcastReceiver mIBeaconReceiver = new IBeaconReceiver() {
@@ -55,13 +64,15 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            protected void onBleEnabled() {
-                mBleEnabled = true;
-            }
-
-            @Override
-            protected void onBleDisabled() {
-                mBleEnabled = false;
+            protected void onBluetoothStateChanged(int state) {
+                switch (state) {
+                case BluetoothAdapter.STATE_OFF:
+                    mBleEnabled = false;
+                    break;
+                case BluetoothAdapter.STATE_ON:
+                    mBleEnabled = true;
+                    break;
+                }
             }
         };
 
@@ -83,6 +94,7 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
+        mBleEnabled = U.BLE.isEnabled(this);
         IBeaconReceiver.registerReceiver(this, mIBeaconReceiver);
     }
 
