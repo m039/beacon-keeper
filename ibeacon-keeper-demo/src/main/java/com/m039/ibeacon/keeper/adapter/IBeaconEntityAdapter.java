@@ -14,15 +14,16 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.m039.ibeacon.keeper.R;
 import com.m039.ibeacon.keeper.U;
+import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter.ViewHolder;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 
 /**
@@ -34,7 +35,10 @@ import com.m039.ibeacon.keeper.content.IBeaconEntity;
  * @version
  * @since
  */
-public class IBeaconEntityAdapter extends BaseAdapter {
+public class IBeaconEntityAdapter 
+    extends RecyclerView.Adapter<IBeaconEntityAdapter.ViewHolder> 
+            implements View.OnClickListener
+{
 
     private List<IBeaconEntity> mIBeaconEntities;
 
@@ -56,38 +60,26 @@ public class IBeaconEntityAdapter extends BaseAdapter {
 
         if (index == -1) {
             result = mIBeaconEntities.add(iBeaconEntity);
+            if (result) {
+                notifyItemInserted(mIBeaconEntities.size() - 1);
+            }
+
         } else {
             mIBeaconEntities.set(index, iBeaconEntity);
             result = true;
-        }
-
-        if (result) {
-            Collections.sort(mIBeaconEntities);
+            notifyItemChanged(index);
         }
 
         return result;
     }
 
     public void clear () {
+        int size = mIBeaconEntities.size();
         mIBeaconEntities.clear();
+        notifyItemRangeRemoved(0, size);
     }
 
-    @Override
-    public int getCount() {
-        return mIBeaconEntities.size();
-    }
-
-    @Override
-    public Object getItem(int index) {
-        return mIBeaconEntities.get(index);
-    }
-
-    @Override
-    public long getItemId (int position) {
-        return -1;
-    }
-
-    private static class Holder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView proximityUuid;
         TextView major;
         TextView minor;
@@ -96,35 +88,49 @@ public class IBeaconEntityAdapter extends BaseAdapter {
         TextView distance;
         TextView lastUpdate;
         ImageView producer;
+
+        ViewHolder(View v) {
+            super(v);
+
+            proximityUuid = (TextView) v.findViewById(R.id.proximity_uuid);
+            major = (TextView) v.findViewById(R.id.major);
+            minor = (TextView) v.findViewById(R.id.minor);
+            txPower = (TextView) v.findViewById(R.id.tx_power);
+            accuracy = (TextView) v.findViewById(R.id.accuracy);
+            distance = (TextView) v.findViewById(R.id.distance);
+            lastUpdate = (TextView) v.findViewById(R.id.last_update);
+            producer = (ImageView) v.findViewById(R.id.producer);
+        }
     }
 
     @Override
-    public View getView (int position, View v, ViewGroup parent) {
-        IBeaconEntity iBeaconEntity = (IBeaconEntity) getItem(position);
+    public IBeaconEntityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) parent
+            .getContext()
+            .getSystemService (Context.LAYOUT_INFLATER_SERVICE);
 
-        Holder h;
+        View v = inflater.inflate(R.layout.e_list, parent, false);
 
-        if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) parent
-                .getContext().getSystemService (Context.LAYOUT_INFLATER_SERVICE);
+        ViewHolder vh = new ViewHolder(v);
 
-            v = inflater.inflate(R.layout.e_list, parent, false);
+        v.setOnClickListener(this);
+        v.setTag(vh);
 
-            h = new Holder();
+        return vh;
+    }
 
-            h.proximityUuid = (TextView) v.findViewById(R.id.proximity_uuid);
-            h.major = (TextView) v.findViewById(R.id.major);
-            h.minor = (TextView) v.findViewById(R.id.minor);
-            h.txPower = (TextView) v.findViewById(R.id.tx_power);
-            h.accuracy = (TextView) v.findViewById(R.id.accuracy);
-            h.distance = (TextView) v.findViewById(R.id.distance);
-            h.lastUpdate = (TextView) v.findViewById(R.id.last_update);
-            h.producer = (ImageView) v.findViewById(R.id.producer);
+    @Override
+    public void onClick(View view) {
+        ViewHolder vh = (ViewHolder) view.getTag();
+        onClick(mIBeaconEntities.get(vh.getPosition()));
+    }
 
-            v.setTag(h);
-        } else {
-            h = (Holder) v.getTag();
-        }
+    protected void onClick(IBeaconEntity iBeaconEntity) {
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder h, int position) {
+        IBeaconEntity iBeaconEntity = mIBeaconEntities.get(position);
 
         h.proximityUuid.setText(iBeaconEntity.getProximityUuid());
         h.major.setText(String.valueOf(iBeaconEntity.getMajor()));
@@ -134,8 +140,11 @@ public class IBeaconEntityAdapter extends BaseAdapter {
         h.lastUpdate.setText(U.IBeacon.getLastUpdate(iBeaconEntity));
         h.distance.setText(iBeaconEntity.getDistanceStringId());
         h.producer.setImageResource(getProducerDrawableId(iBeaconEntity));
+    }
 
-        return v;
+    @Override
+    public int getItemCount() {
+        return mIBeaconEntities.size();
     }
 
     private static int getProducerDrawableId(IBeaconEntity iBeaconEntity) {

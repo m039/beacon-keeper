@@ -52,6 +52,26 @@
         <artifactId>robolectric</artifactId>
         <version>2.2</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.android.support</groupId>
+        <artifactId>recyclerview-v7</artifactId>
+        <version>21.0.0-rc1</version>
+        <type>aar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>com.android.support</groupId>
+        <artifactId>cardview-v7</artifactId>
+        <version>21.0.0-rc1</version>
+        <type>aar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>android.support</groupId>
+        <artifactId>compatibility-v4</artifactId>
+        <version>20.0.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

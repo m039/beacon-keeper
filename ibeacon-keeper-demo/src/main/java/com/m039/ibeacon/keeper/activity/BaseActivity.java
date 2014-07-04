@@ -32,7 +32,7 @@ public class BaseActivity extends Activity {
             public void handleMessage (Message msg) {
                 if (msg.what == WHAT_PERIODIC_UPDATE) {
                     onPeriodicUpdate();
-                    sendEmptyMessageDelayed(msg.what, 500);
+                    sendEmptyMessageDelayed(msg.what, 1000);
                 }
             }
         };

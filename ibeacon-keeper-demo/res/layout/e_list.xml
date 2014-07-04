@@ -1,184 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
+    style="@style/CardView.Dark"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    card_view:cardCornerRadius="12dp"
     >
 
-  <TableLayout
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:shrinkColumns="0"
-      android:stretchColumns="1"
+      android:orientation="vertical"
       >
 
-    <TableRow
+    <TableLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:shrinkColumns="0"
+        android:stretchColumns="1"
         >
 
-      <TextView
+      <TableRow
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="proxmityUuid"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:layout_span="2"
-          />
+          >
 
-    </TableRow>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="proxmityUuid"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:layout_span="2"
+            />
 
-    <TableRow
-        android:layout_width="match_parent"
-        >
+      </TableRow>
 
-      <TextView
-          android:id="@+id/proximity_uuid"
+      <TableRow
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_span="2"
-          android:textSize="14sp"
-          android:typeface="monospace"
-          />
+          >
 
-    </TableRow>
+        <TextView
+            android:id="@+id/proximity_uuid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:textSize="14sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:minWidth="80dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="major"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/major"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:minWidth="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="major"
+            />
 
-    </TableRow>
+        <TextView
+            android:id="@+id/major"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="minor"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/minor"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="minor"
+            />
 
-    </TableRow>
+        <TextView
+            android:id="@+id/minor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="txPower"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/tx_power"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="txPower"
+            />
 
-    </TableRow>
+        <TextView
+            android:id="@+id/tx_power"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="accuracy"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/accuracy"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="accuracy"
+            />
 
-    </TableRow>
+        <TextView
+            android:id="@+id/accuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="distance"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/distance"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="distance"
+            />
 
-    </TableRow>
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-    <TableRow
-        >
+      </TableRow>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          android:text="last update"
-          />
+      <TableRow
+          >
 
-      <TextView
-          android:id="@+id/last_update"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="10sp"
-          android:typeface="monospace"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            android:text="last update"
+            />
 
-    </TableRow>
-  </TableLayout>
+        <TextView
+            android:id="@+id/last_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:typeface="monospace"
+            />
 
-  <ImageView
-      android:id="@+id/producer"
-      android:layout_width="60dp"
-      android:layout_height="60dp"
-      android:textSize="10sp"
-      android:typeface="monospace"
-      android:scaleType="fitCenter"
-      />
+      </TableRow>
+    </TableLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/producer"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:textSize="10sp"
+        android:typeface="monospace"
+        android:scaleType="fitCenter"
+        />
+
+  </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+

@@ -27,6 +27,23 @@
       <version>${project.version}</version>
       <type>apklib</type>
     </dependency>
+
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>recyclerview-v7</artifactId>
+      <type>aar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>cardview-v7</artifactId>
+      <type>aar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v4</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

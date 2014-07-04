@@ -3,9 +3,9 @@ package com.m039.ibeacon.keeper.activity;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.m039.ibeacon.keeper.R;
@@ -19,10 +19,15 @@ public class MainActivity extends BaseActivity {
     public static final String TAG = "m039";
 
     private TextView mText;
-    private ListView mList;
+    private RecyclerView mRecycler;
 
     private IBeaconEntityAdapter mIBeaconEntityAdapter = 
-        new IBeaconEntityAdapter();
+        new IBeaconEntityAdapter() {
+            @Override
+            protected void onClick(IBeaconEntity iBeaconEntity) {
+                IBeaconInfoActivity.startActivity(MainActivity.this, iBeaconEntity);
+            }
+        };
 
     private boolean mBleEnabled = false;    
 
@@ -32,24 +37,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.a_main);
 
         mText = (TextView) findViewById(R.id.text);
-        mList = (ListView) findViewById(R.id.list);
+        mRecycler = (RecyclerView) findViewById(R.id.recycler);
 
-        if (mList != null) {
-            mList.setAdapter(mIBeaconEntityAdapter);
-            mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-                        final IBeaconEntity iBeaconEntity = (IBeaconEntity) parent
-                             .getItemAtPosition(position);
-
-                        IBeaconInfoActivity.startActivity(parent.getContext(), iBeaconEntity);
-                    }
-                });
-
-            View onEmpty = findViewById(R.id.on_empty);
-            if (onEmpty != null) {
-                mList.setEmptyView(onEmpty);
-            }
+        if (mRecycler != null) {
+            mRecycler.setHasFixedSize(true);
+            mRecycler.setLayoutManager(new LinearLayoutManager(this));
+            mRecycler.setItemAnimator(new DefaultItemAnimator());
+            mRecycler.setAdapter(mIBeaconEntityAdapter);
         }
     }
 
