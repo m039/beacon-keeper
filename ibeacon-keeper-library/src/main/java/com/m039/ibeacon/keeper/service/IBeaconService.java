@@ -187,10 +187,16 @@ public class IBeaconService extends Service {
         }
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
+    }
+
     private void sendFoundBeaconBroadcast(IBeaconEntity iBeaconEntity) {
         Intent intent = new Intent();
         intent.setAction(ACTION_FOUND_IBEACON);
-        intent.setPackage(getPackageName());
+        // intent.setPackage(getPackageName());
         intent.putExtra(EXTRA_IBEACON_ENTITY, iBeaconEntity);
         sendBroadcast(intent);
     }

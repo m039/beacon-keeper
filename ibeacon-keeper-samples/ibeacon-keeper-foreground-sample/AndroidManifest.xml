@@ -19,7 +19,9 @@
       </intent-filter>
     </activity>
 
-    <service android:name="com.m039.ibeacon.keeper.service.IBeaconService"/>
+    <service android:name="com.m039.ibeacon.keeper.service.IBeaconService"
+             android:process=":com.m039.ibeacon.keeper.service.IBeaconService"
+             />
 
   </application>
 

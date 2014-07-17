@@ -20,13 +20,18 @@
       </intent-filter>
     </activity>
 
-    <service android:name="com.m039.ibeacon.keeper.service.IBeaconService" />
+    <service android:name="com.m039.ibeacon.keeper.service.IBeaconService"
+             android:process=":com.m039.ibeacon.keeper.service.IBeaconService"
+             />
 
     <receiver
         android:name="com.m039.ibeacon.keeper.receiver.MainReceiver"
+        android:exported="true"
         >
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+      <intent-filter>
         <action android:name="com.m039.ibeacon.keeper.service.action.FOUND_IBEACON" />
       </intent-filter>
     </receiver>
