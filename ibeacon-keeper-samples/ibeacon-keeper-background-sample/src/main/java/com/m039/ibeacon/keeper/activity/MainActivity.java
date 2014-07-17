@@ -9,7 +9,7 @@
 
 package com.m039.ibeacon.keeper.activity;
 
-import com.m039.ibeacon.keeper.foreground_sample.R;
+import com.m039.ibeacon.keeper.background_sample.R;
 import android.app.Activity;
 import android.os.Bundle;
 

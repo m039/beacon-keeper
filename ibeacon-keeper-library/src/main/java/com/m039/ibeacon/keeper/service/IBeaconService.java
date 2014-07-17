@@ -53,13 +53,17 @@ public class IBeaconService extends Service {
         startServiceByAlarmManager(ctx);
     }
 
+    public static void onBootCompleted(Context ctx) {
+        startServiceByAlarmManager(ctx);
+    }
+
     public static void startService(Context ctx) {
         ctx.startService(new Intent(ctx, IBeaconService.class));
     }
 
     private static void startServiceByAlarmManager(Context ctx) {
         Intent i = new Intent(ctx, IBeaconService.class);
-        PendingIntent pi = PendingIntent.getService(ctx, 0, i, 0);
+        PendingIntent pi = PendingIntent.getService(ctx, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP,
