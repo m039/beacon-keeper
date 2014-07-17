@@ -13,7 +13,7 @@
 
   <modules>
     <module>ibeacon-keeper-library</module>
-    <module>ibeacon-keeper-demo</module>
+    <module>ibeacon-keeper-app</module>
   </modules>
 
   <properties>

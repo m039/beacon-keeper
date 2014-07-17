@@ -16,9 +16,9 @@ import com.m039.ibeacon.keeper.service.IBeaconService;
 /**
  *
  *
- * Created: 03/22/14
+ * Created:
  *
- * @author Dmitry Mozgin
+ * @author
  * @version
  * @since
  */
@@ -28,7 +28,7 @@ public class MainApplication extends Application {
     public void onCreate () {
         super.onCreate ();
 
-        IBeaconService.startServiceByAlarmManager(this);
+        IBeaconService.onApplicationCreate(this);
     }
-
+    
 } // MainApplication

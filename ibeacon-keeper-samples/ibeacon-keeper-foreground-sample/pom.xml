@@ -9,29 +9,24 @@
     <groupId>com.m039.ibeacon.keeper</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>ibeacon-keeper-library</artifactId>
-  <packaging>aar</packaging>
+  <artifactId>ibeacon-keeper-foreground-sample</artifactId>
+  <packaging>apk</packaging>
 
   <dependencies>
     <dependency>
       <groupId>android</groupId>
       <artifactId>android</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.robolectric</groupId>
-      <artifactId>robolectric</artifactId>
-      <scope>test</scope>
+      <groupId>com.m039.ibeacon.keeper</groupId>
+      <artifactId>ibeacon-keeper-library</artifactId>
+      <version>${project.version}</version>
+      <type>aar</type>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

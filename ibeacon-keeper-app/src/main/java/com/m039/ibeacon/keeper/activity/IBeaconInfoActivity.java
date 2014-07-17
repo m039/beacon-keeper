@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.U;
+import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
 
@@ -40,7 +40,9 @@ public class IBeaconInfoActivity extends BaseActivity {
     private TextView mAccuracy;
     private TextView mDistance;
     private TextView mLastUpdate;
-    private ImageView mProducer;
+    
+    @SuppressWarnings("unused")
+	private ImageView mProducer;
 
     private IBeaconEntity mIBeaconEntity;
 

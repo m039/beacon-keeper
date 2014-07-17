@@ -24,12 +24,20 @@ public class L {
 
     public static final String TAG = "m039";
 
+    public static int d (String msg) {
+        return d(TAG, msg);
+    }
+
     public static int d (String tag, String msg) {
+        return d(tag, msg, (Object[]) null);
+    }
+
+    public static int d(String tag, String fmt, Object ... args) {
         if (C.DEBUG) {
-            return Log.d(tag, msg);
+            return Log.d(tag, String.format(fmt, args));
         }
 
-        return -1;
+        return -1;        
     }
 
     public static int wtf(String tag, String msg) {

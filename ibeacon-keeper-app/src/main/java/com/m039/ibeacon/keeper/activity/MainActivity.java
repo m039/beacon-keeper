@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.m039.ibeacon.keeper.U;
-import com.m039.ibeacon.keeper.U.SharedPreferences;
 import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter;
 import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
@@ -67,7 +66,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
-                android.util.Log.d("m039", "found beacon " + iBeaconEntity.getProximityUuid());
                 mIBeaconEntityAdapter.replace(iBeaconEntity);
             }
 

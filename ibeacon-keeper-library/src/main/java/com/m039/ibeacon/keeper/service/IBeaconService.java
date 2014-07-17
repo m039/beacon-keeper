@@ -49,11 +49,15 @@ public class IBeaconService extends Service {
     private static boolean sSharedPreferencesHasChanged = false;
     private static boolean sSharedPreferencesChangeListenerRegistered = false;
 
+    public static void onApplicationCreate(Context ctx) {
+        startServiceByAlarmManager(ctx);
+    }
+
     public static void startService(Context ctx) {
         ctx.startService(new Intent(ctx, IBeaconService.class));
     }
 
-    public static void startServiceByAlarmManager(Context ctx) {
+    private static void startServiceByAlarmManager(Context ctx) {
         Intent i = new Intent(ctx, IBeaconService.class);
         PendingIntent pi = PendingIntent.getService(ctx, 0, i, 0);
 
@@ -76,8 +80,10 @@ public class IBeaconService extends Service {
                             if (key != null &&
                                 (key.equals(keyScanningTimeMs) ||
                                  key.equals(keyIdleTimeMs))) {
-                                L.d(TAG, String.format("IBeaconService.onSharedPreferenceChanged: %s", key));
+                                L.d(TAG, "IBeaconService.onSharedPreferenceChanged: %s", key);
                                 sSharedPreferencesHasChanged = true;
+
+                                // Todo: only check if value is changed
                             }
                         }
                     });
@@ -85,7 +91,6 @@ public class IBeaconService extends Service {
             sSharedPreferencesChangeListenerRegistered = true;
         }
     }
-
 
     private static void restartServiceByAlarmManager(Context ctx)  {
         Intent i = new Intent(ctx, IBeaconService.class);
@@ -167,8 +172,8 @@ public class IBeaconService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        L.d(TAG, String.format("onDestroy: startTime %s runningTime %s",
-                               mRunningTimeDebug, System.currentTimeMillis() - mRunningTimeDebug));
+        L.d(TAG, "onDestroy: startTime %s runningTime %s",
+            mRunningTimeDebug, System.currentTimeMillis() - mRunningTimeDebug);
 
         mSimpleLeScanner = null;
 
