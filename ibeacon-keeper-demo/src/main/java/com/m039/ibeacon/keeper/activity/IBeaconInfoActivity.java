@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.m039.ibeacon.keeper.R;
+import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.U;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;

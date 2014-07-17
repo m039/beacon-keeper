@@ -14,9 +14,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.m039.ibeacon.keeper.L;
 import com.m039.ibeacon.keeper.U;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.library.R;
@@ -36,15 +39,15 @@ public class IBeaconService extends Service {
     public static final String TAG = "m039";
 
     public static final String PACKAGE = "com.m039.ibeacon.keeper.service.";
-    
+
     public static final String ACTION_FOUND_IBEACON = PACKAGE + "action.FOUND_IBEACON";
     public static final String ACTION_BLE_DISABLED = PACKAGE + "action.BLE_DISABLED";
     public static final String ACTION_BLE_ENABLED = PACKAGE + "action.BLE_ENABLED";
 
     public static final String EXTRA_IBEACON_ENTITY = PACKAGE + "extra.ibeacon_entity";
 
-    public static final String META_SCANNING_TIME_MS = "scanning_time_ms";
-
+    private static boolean sSharedPreferencesHasChanged = false;
+    private static boolean sSharedPreferencesChangeListenerRegistered = false;
 
     public static void startService(Context ctx) {
         ctx.startService(new Intent(ctx, IBeaconService.class));
@@ -59,14 +62,65 @@ public class IBeaconService extends Service {
                         System.currentTimeMillis(),
                         getRepeatTimeMs(ctx),
                         pi);
+
+        if (!sSharedPreferencesChangeListenerRegistered) {
+            final String keyScanningTimeMs = ctx
+                .getString(R.string.ibeacon_keeper__pref_key__scanning_time_ms);
+            final String keyIdleTimeMs = ctx
+                .getString(R.string.ibeacon_keeper__pref_key__idle_time_ms);
+
+            U.SharedPreferences.getDefaultSharedPreferences(ctx)
+                .registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+                        @Override
+                        public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
+                            if (key != null &&
+                                (key.equals(keyScanningTimeMs) ||
+                                 key.equals(keyIdleTimeMs))) {
+                                L.d(TAG, String.format("IBeaconService.onSharedPreferenceChanged: %s", key));
+                                sSharedPreferencesHasChanged = true;
+                            }
+                        }
+                    });
+
+            sSharedPreferencesChangeListenerRegistered = true;
+        }
+    }
+
+
+    private static void restartServiceByAlarmManager(Context ctx)  {
+        Intent i = new Intent(ctx, IBeaconService.class);
+        PendingIntent pi = PendingIntent.getService(ctx, 0, i, PendingIntent.FLAG_NO_CREATE);
+
+        if (pi != null) {
+            // alarm is set => restart
+
+            AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+            am.setRepeating(AlarmManager.RTC_WAKEUP,
+                            System.currentTimeMillis(),
+                            getRepeatTimeMs(ctx),
+                            pi);
+
+        } else {
+            // alarm is not set => do nothing
+        }
     }
 
     private static int getScanningTimeMs(Context ctx) {
-        return ctx.getResources().getInteger(R.integer.beacon_service__scanning_time_ms);
+        Resources res = ctx.getResources();
+
+        String key = res.getString(R.string.ibeacon_keeper__pref_key__scanning_time_ms);
+        int defValue = res.getInteger(R.integer.ibeacon_keeper__scanning_time_ms_default);
+
+        return U.SharedPreferences.getInteger(ctx, key, defValue);
     }
 
     private static int getIdleTimeMs(Context ctx) {
-        return ctx.getResources().getInteger(R.integer.beacon_service__idle_time_ms);
+        Resources res = ctx.getResources();
+
+        String key = res.getString(R.string.ibeacon_keeper__pref_key__idle_time_ms);
+        int defValue = res.getInteger(R.integer.ibeacon_keeper__idle_time_ms_default);
+
+        return U.SharedPreferences.getInteger(ctx, key, defValue);
     }
 
     private static int getRepeatTimeMs(Context ctx) {
@@ -83,9 +137,13 @@ public class IBeaconService extends Service {
             }
         };
 
+    private long mRunningTimeDebug = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mRunningTimeDebug = System.currentTimeMillis();
 
         mSimpleLeScanner = new SimpleLeScanner();
         if (mSimpleLeScanner.startScan(this, mLeScanCallback)) {
@@ -108,7 +166,16 @@ public class IBeaconService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        L.d(TAG, String.format("onDestroy: startTime %s runningTime %s",
+                               mRunningTimeDebug, System.currentTimeMillis() - mRunningTimeDebug));
+
         mSimpleLeScanner = null;
+
+        if (sSharedPreferencesHasChanged) {
+            restartServiceByAlarmManager(this);
+            sSharedPreferencesHasChanged = false;
+        }
     }
 
     private void sendFoundBeaconBroadcast(IBeaconEntity iBeaconEntity) {
@@ -116,7 +183,7 @@ public class IBeaconService extends Service {
         intent.setAction(ACTION_FOUND_IBEACON);
         intent.setPackage(getPackageName());
         intent.putExtra(EXTRA_IBEACON_ENTITY, iBeaconEntity);
-        sendBroadcast(intent); 
+        sendBroadcast(intent);
     }
 
     @Override

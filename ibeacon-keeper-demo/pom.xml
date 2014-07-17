@@ -25,7 +25,7 @@
       <groupId>com.m039.ibeacon.keeper</groupId>
       <artifactId>ibeacon-keeper-library</artifactId>
       <version>${project.version}</version>
-      <type>apklib</type>
+      <type>aar</type>
     </dependency>
 
     <dependency>

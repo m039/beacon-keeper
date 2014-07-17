@@ -5,4 +5,8 @@
    <string name="ibeacon_entity__distance__near">near</string>
    <string name="ibeacon_entity__distance__immediate">immediate</string>
 
+   <string name="ibeacon_keeper__pref_key__scanning_time_ms">ibeacon_keeper__pref_key__scanning_time_ms</string>
+   <string name="ibeacon_keeper__pref_key__idle_time_ms">ibeacon_keeper__pref_key__idle_time_ms</string>
+   <string name="ibeacon_keeper__pref_key__beacon_ttl_ms">ibeacon_keeper__pref_key__beacon_ttl_ms</string>
+
 </resources>

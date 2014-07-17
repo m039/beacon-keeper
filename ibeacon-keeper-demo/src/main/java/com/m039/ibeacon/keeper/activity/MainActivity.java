@@ -3,15 +3,20 @@ package com.m039.ibeacon.keeper.activity;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.m039.ibeacon.keeper.R;
 import com.m039.ibeacon.keeper.U;
+import com.m039.ibeacon.keeper.U.SharedPreferences;
 import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter;
+import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 import com.m039.ibeacon.keeper.fragment.BluetoothEnableButtonFragment;
 import com.m039.ibeacon.keeper.receiver.IBeaconReceiver;
@@ -22,10 +27,11 @@ public class MainActivity extends BaseActivity {
     public static final String TAG = "m039";
 
     private TextView mText;
+    private TextView mFound;
     private RecyclerView mRecycler;
-    private boolean mBleEnabled = false;    
+    private boolean mBleEnabled = false;
 
-    private IBeaconEntityAdapter mIBeaconEntityAdapter = 
+    private IBeaconEntityAdapter mIBeaconEntityAdapter =
         new IBeaconEntityAdapter() {
             @Override
             protected void onClick(IBeaconEntity iBeaconEntity) {
@@ -39,6 +45,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.a_main);
 
         mText = (TextView) findViewById(R.id.text);
+        mFound = (TextView) findViewById(R.id.found);
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
 
         if (mRecycler != null) {
@@ -60,6 +67,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
+                android.util.Log.d("m039", "found beacon " + iBeaconEntity.getProximityUuid());
                 mIBeaconEntityAdapter.replace(iBeaconEntity);
             }
 
@@ -74,10 +82,19 @@ public class MainActivity extends BaseActivity {
                     break;
                 }
             }
+
         };
 
     @Override
     protected void onPeriodicUpdate() {
+        Resources res = getResources();
+
+        mIBeaconEntityAdapter.removeOld(U.SharedPreferences
+                                        .getInteger(this, 
+                                                    res.getString(R.string.ibeacon_keeper__pref_key__beacon_ttl_ms),
+                                                    res.getInteger(R.integer.ibeacon_keeper__beacon_ttl_ms_default)));
+        mIBeaconEntityAdapter.notifyDataSetChanged();
+
         if (mText != null) {
             if (mBleEnabled) {
                 mText.setText(R.string.a_demo__ble_enabled);
@@ -87,7 +104,9 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        mIBeaconEntityAdapter.notifyDataSetChanged();
+        if (mFound != null) {
+            mFound.setText(String.format(res.getString(R.string.main__found, String.valueOf(mIBeaconEntityAdapter.getItemCount()))));
+        }
     }
 
     @Override
@@ -103,5 +122,26 @@ public class MainActivity extends BaseActivity {
         super.onStop();
 
         IBeaconReceiver.unregisterReceiver(this, mIBeaconReceiver);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.a_main_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_settings:
+            SettingsActivity.startActivity(this);
+            return true;
+        case R.id.action_about:
+            AboutActivity.startActivity(this);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

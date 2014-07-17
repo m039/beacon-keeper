@@ -13,7 +13,7 @@
   </parent>
 
   <artifactId>ibeacon-keeper-library</artifactId>
-  <packaging>apklib</packaging>
+  <packaging>aar</packaging>
 
   <repositories>
     <repository>

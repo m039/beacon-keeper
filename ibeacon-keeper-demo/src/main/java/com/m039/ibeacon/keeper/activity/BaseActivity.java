@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 
-
 /**
  *
  *
@@ -49,14 +48,14 @@ public class BaseActivity extends Activity {
         super.onStop();
 
         stopHandleMessages();
+    }    
+
+    private void startHandleMessages() {
+        mHandler.sendEmptyMessage(WHAT_PERIODIC_UPDATE);
     }
 
     private void stopHandleMessages() {
         mHandler.removeMessages(WHAT_PERIODIC_UPDATE);
-    }
-
-    private void startHandleMessages() {
-        mHandler.sendEmptyMessage(WHAT_PERIODIC_UPDATE);
     }
 
     protected void onPeriodicUpdate() {

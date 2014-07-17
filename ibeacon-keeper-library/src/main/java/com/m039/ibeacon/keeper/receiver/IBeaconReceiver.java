@@ -67,6 +67,9 @@ public class IBeaconReceiver extends BroadcastReceiver
         }
     }
 
+    //
+    // Todo: add getContext function or Context parameter to function
+    // 
     protected void onFoundIBeacon(IBeaconEntity iBeaconEntity) {
         // log
     }

@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -105,6 +106,24 @@ public class U {
             } catch (NullPointerException e) {
                 Log.wtf(TAG, e);
                 return null;
+            }
+        }
+    }
+
+    public static class SharedPreferences {
+        public static android.content.SharedPreferences getDefaultSharedPreferences(Context ctx) {
+            return PreferenceManager.getDefaultSharedPreferences(ctx);
+        }
+
+        public static int getInteger(Context ctx, String key, int defValue)  {
+            return getInteger(getDefaultSharedPreferences(ctx), key, defValue);
+        }
+
+        public static int getInteger(android.content.SharedPreferences sp, String key, int defValue)  {
+            try {
+                return Integer.parseInt(sp.getString(key, String.valueOf(defValue)));
+            } catch (NumberFormatException e) {
+                return defValue;
             }
         }
     }

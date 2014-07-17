@@ -10,7 +10,6 @@
 package com.m039.ibeacon.keeper.adapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -21,9 +20,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.m039.ibeacon.keeper.R;
 import com.m039.ibeacon.keeper.U;
-import com.m039.ibeacon.keeper.adapter.IBeaconEntityAdapter.ViewHolder;
+import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.content.IBeaconEntity;
 
 /**
@@ -35,8 +33,8 @@ import com.m039.ibeacon.keeper.content.IBeaconEntity;
  * @version
  * @since
  */
-public class IBeaconEntityAdapter 
-    extends RecyclerView.Adapter<IBeaconEntityAdapter.ViewHolder> 
+public class IBeaconEntityAdapter
+    extends RecyclerView.Adapter<IBeaconEntityAdapter.ViewHolder>
             implements View.OnClickListener
 {
 
@@ -79,7 +77,27 @@ public class IBeaconEntityAdapter
         notifyItemRangeRemoved(0, size);
     }
 
+    public void removeOld(int timeToLiveMs) {
+        List<IBeaconEntity> toRemove = null;
+        long currentTimeMs = System.currentTimeMillis();
+
+        for (IBeaconEntity iBeaconEntity : mIBeaconEntities) {
+            if ((currentTimeMs - iBeaconEntity.getTimestamp()) > timeToLiveMs) {
+                if (toRemove == null) {
+                    toRemove = new ArrayList<IBeaconEntity>();
+                }
+
+                toRemove.add(iBeaconEntity);
+            }
+        }
+
+        if (toRemove != null) {
+            mIBeaconEntities.removeAll(toRemove);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView proximityUuid;
         TextView major;
         TextView minor;
@@ -101,6 +119,7 @@ public class IBeaconEntityAdapter
             lastUpdate = (TextView) v.findViewById(R.id.last_update);
             producer = (ImageView) v.findViewById(R.id.producer);
         }
+
     }
 
     @Override

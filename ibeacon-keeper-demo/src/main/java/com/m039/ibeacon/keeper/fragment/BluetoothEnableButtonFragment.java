@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.m039.ibeacon.keeper.R;
+import com.m039.ibeacon.keeper.app.R;
 import com.m039.ibeacon.keeper.U;
 
 

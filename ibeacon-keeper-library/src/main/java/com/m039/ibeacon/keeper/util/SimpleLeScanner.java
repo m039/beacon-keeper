@@ -48,7 +48,7 @@ public class SimpleLeScanner {
 
     public boolean startScan(Context ctx, LeScanCallback callback) {
         BluetoothAdapter ba = U.getBluetoothAdapter(ctx);
-        if (ba != null && ba.isEnabled() && !mIsScanning) {
+        if (ba != null && ba.isEnabled() && !mIsScanning && callback != null) {
             if (ba.startLeScan(callback)) {
                 mIsScanning = true;
                 onStartScan();
@@ -64,7 +64,7 @@ public class SimpleLeScanner {
 
     public void stopScan(Context ctx, LeScanCallback callback) {
         BluetoothAdapter ba = U.getBluetoothAdapter(ctx);
-        if (ba != null && mIsScanning) {
+        if (ba != null && mIsScanning && callback != null) {
             ba.stopLeScan(callback);
             onStopScan();
             mIsScanning = false;

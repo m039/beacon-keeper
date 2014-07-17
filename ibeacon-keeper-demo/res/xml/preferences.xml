@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+  <PreferenceCategory
+      android:title="Service"
+      android:key="pref_key_storage_settings"
+      >
+
+    <EditTextPreference
+        android:key="@string/ibeacon_keeper__pref_key__scanning_time_ms"
+        android:defaultValue="@integer/ibeacon_keeper__scanning_time_ms_default"
+        android:title="@string/preferences__scanning_time_ms_title"
+        android:numeric="integer"
+        />
+
+    <EditTextPreference
+        android:key="@string/ibeacon_keeper__pref_key__idle_time_ms"
+        android:defaultValue="@integer/ibeacon_keeper__idle_time_ms_default"
+        android:title="@string/preferences__idle_time_ms__title"
+        android:numeric="integer"
+        />
+
+  </PreferenceCategory>
+
+  <PreferenceCategory
+      android:title="Application"
+      android:key="pref_key_storage_settings"
+      >
+
+    <EditTextPreference
+        android:key="@string/ibeacon_keeper__pref_key__beacon_ttl_ms"
+        android:defaultValue="@integer/ibeacon_keeper__beacon_ttl_ms_default"
+        android:title="@string/preferences__beacon_ttl_ms__title"
+        android:summary="@string/preferences__beacon_ttl_ms__summary"
+        android:numeric="decimal"
+        />
+
+  </PreferenceCategory>
+
+</PreferenceScreen>

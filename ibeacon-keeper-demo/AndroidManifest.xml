@@ -1,7 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="com.m039.ibeacon.keeper">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="com.m039.ibeacon.keeper.app">
 
   <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="19"/>
-  
+
   <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
   <uses-permission android:name="android.permission.BLUETOOTH"/>
@@ -22,6 +22,12 @@
     </activity>
 
     <activity android:name="com.m039.ibeacon.keeper.activity.IBeaconInfoActivity" />
+    <activity android:name="com.m039.ibeacon.keeper.activity.SettingsActivity" 
+              android:theme="@style/Theme.Settings"
+              />
+    <activity android:name="com.m039.ibeacon.keeper.activity.AboutActivity" 
+              android:theme="@style/Theme.About"
+              />
 
     <service android:name="com.m039.ibeacon.keeper.service.IBeaconService"/>
 
