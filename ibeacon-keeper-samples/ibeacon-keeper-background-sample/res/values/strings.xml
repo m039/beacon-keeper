@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">IBeaconKeeper background sample</string>
+  <string name="a_main__info">This is background sample.\nUse logcat to see if it is working.\nDon\'t forget to turn bluetooth on!</string>
+
+</resources>
