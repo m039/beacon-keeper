@@ -1,0 +1,1 @@
+../beacon-sdk/doc/Readme.md
