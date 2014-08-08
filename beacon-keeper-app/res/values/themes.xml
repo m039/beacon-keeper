@@ -7,4 +7,8 @@
   <style name="Theme.About" parent="android:Theme.DeviceDefault.NoActionBar">
   </style>
 
+  <style name="Theme.Main" parent="android:Theme.DeviceDefault.NoActionBar">
+    <item name="android:windowBackground">@color/orange</item>
+  </style>
+
 </resources>

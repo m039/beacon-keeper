@@ -14,4 +14,6 @@
   <string name="preferences__beacon_ttl_ms__title">Beacon time to live</string>
   <string name="preferences__beacon_ttl_ms__summary">How long beacon considered visible</string>
 
-</resources>
+  <string name="f_splash__text">Beacon\nKeeper</string>
+
+ </resources>
