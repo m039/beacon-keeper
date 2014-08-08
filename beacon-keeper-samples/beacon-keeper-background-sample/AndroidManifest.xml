@@ -1,0 +1,41 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="com.m039.beacon.keeper.background_sample">
+
+  <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="19"/>
+
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <uses-permission android:name="android.permission.BLUETOOTH"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+  <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
+  <application android:allowBackup="true"
+               android:icon="@drawable/ic_launcher"
+               android:label="@string/app_name"
+               android:name="com.m039.beacon.keeper.app.MainApplication">
+
+    <activity android:name="com.m039.beacon.keeper.activity.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <service android:name="com.m039.beacon.keeper.service.BeaconService"
+             android:process=":com.m039.beacon.keeper.service.BeaconService"
+             />
+
+    <receiver
+        android:name="com.m039.beacon.keeper.receiver.MainReceiver"
+        android:exported="true"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.m039.beacon.keeper.service.action.FOUND_BEACON" />
+      </intent-filter>
+    </receiver>
+
+  </application>
+
+</manifest>

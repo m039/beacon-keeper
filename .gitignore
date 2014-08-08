@@ -9,3 +9,4 @@ gen
 *.iml
 .gradle
 sandbox
+doc/TodoDesign.md

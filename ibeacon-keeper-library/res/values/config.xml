@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-   <integer name="ibeacon_keeper__scanning_time_ms_default">1000</integer>
-   <integer name="ibeacon_keeper__idle_time_ms_default">1000</integer>
-   <integer name="ibeacon_keeper__beacon_ttl_ms_default">30000</integer>
-
-</resources>
