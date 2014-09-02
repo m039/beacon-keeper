@@ -1,5 +1,5 @@
 /** BeaconService.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.service;
@@ -165,21 +165,11 @@ public class BeaconService extends Service {
 
         mSimpleLeScanner = new SimpleLeScanner();
         if (mSimpleLeScanner.startScan(this, mLeScanCallback)) {
-            mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+            stopScan(false);
         } else {
-            mOnStopScanRunnable.run();
+            stopScan(true);
         }
-    }
-
-    private Runnable mOnStopScanRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (mSimpleLeScanner != null) {
-                    mSimpleLeScanner.stopScan(BeaconService.this, mLeScanCallback);
-                }
-                stopSelf();
-            }
-        };
+    }    
 
     @Override
     public void onDestroy() {
@@ -188,13 +178,33 @@ public class BeaconService extends Service {
         L.d(TAG, "onDestroy: startTime %s runningTime %s",
             mRunningTimeDebug, System.currentTimeMillis() - mRunningTimeDebug);
 
-        mSimpleLeScanner = null;
+        stopScan(true);
 
         if (sSharedPreferencesHasChanged) {
             restartServiceByAlarmManager(this);
             sSharedPreferencesHasChanged = false;
         }
     }
+
+    private void stopScan(boolean force) {
+        if (force) {
+            mOnStopScanRunnable.run();
+        } else {
+            mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+        }
+    }
+
+    private Runnable mOnStopScanRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mSimpleLeScanner != null) {
+                    mSimpleLeScanner.stopScan(BeaconService.this, mLeScanCallback);
+                    mSimpleLeScanner = null;
+
+                    stopSelf();
+                }
+            }
+        };
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

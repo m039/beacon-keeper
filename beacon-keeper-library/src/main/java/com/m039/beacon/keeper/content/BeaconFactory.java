@@ -138,31 +138,31 @@ public class BeaconFactory {
         int k = 0;
 
         for (int i = 0; i < 4; i++) {
-            sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 6; i++) {
-            sb.append(Integer.toHexString(proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
         }
 
         return sb.toString();
