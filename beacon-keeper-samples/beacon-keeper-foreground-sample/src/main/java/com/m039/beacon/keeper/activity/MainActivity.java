@@ -18,11 +18,12 @@
 
 package com.m039.beacon.keeper.activity;
 
-import com.m039.beacon.keeper.foreground_sample.R;
+import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.m039.beacon.keeper.foreground_sample.R;
 import com.m039.beacon.keeper.receiver.BeaconReceiver;
 import com.m039.beacon.keeper.content.BeaconEntity;
 
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
     private BeaconReceiver mBeaconReceiver = new BeaconReceiver() {
 
             @Override
-            protected void onFoundBeacon(BeaconEntity beaconEntity) {
+            protected void onFoundBeacon(Context ctx, BeaconEntity beaconEntity) {
                 android.util.Log.d("MainActivity", "onFoundBeacon | " + beaconEntity.getIBeacon());
             }
 

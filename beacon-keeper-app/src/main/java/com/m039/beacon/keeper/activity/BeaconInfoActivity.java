@@ -73,7 +73,7 @@ public class BeaconInfoActivity extends BaseActivity {
     private BeaconReceiver mBeaconReceiver = new BeaconReceiver() {
 
             @Override
-            protected void onFoundBeacon(BeaconEntity beaconEntity) {
+            protected void onFoundBeacon(Context ctx, BeaconEntity beaconEntity) {
                 if (mBeaconEntity.equals(beaconEntity)) {
                     mBeaconEntity = beaconEntity;
                 }

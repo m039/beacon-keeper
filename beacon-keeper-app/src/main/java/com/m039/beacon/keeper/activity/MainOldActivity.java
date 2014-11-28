@@ -18,6 +18,7 @@
 
 package com.m039.beacon.keeper.activity;
 
+import android.content.Context;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -83,12 +84,12 @@ public class MainOldActivity extends BaseActivity {
     private BroadcastReceiver mBeaconReceiver = new BeaconReceiver() {
 
             @Override
-            protected void onFoundBeacon(BeaconEntity beaconEntity) {
+            protected void onFoundBeacon(Context ctx, BeaconEntity beaconEntity) {
                 mBeaconEntityAdapter.replace(beaconEntity);
             }
 
             @Override
-            protected void onBluetoothStateChanged(int state) {
+            protected void onBluetoothStateChanged(Context ctx, int state) {
                 switch (state) {
                 case BluetoothAdapter.STATE_OFF:
                     mBleEnabled = false;

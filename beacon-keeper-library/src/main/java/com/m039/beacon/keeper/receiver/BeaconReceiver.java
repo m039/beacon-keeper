@@ -66,27 +66,22 @@ public class BeaconReceiver extends BroadcastReceiver
         String action = intent.getAction();
 
         if (action.equals(BeaconService.ACTION_FOUND_BEACON)) {
-            onFoundBeacon((BeaconEntity) intent
-                          .getParcelableExtra(BeaconService.EXTRA_BEACON_ENTITY));
+            onFoundBeacon(context, (BeaconEntity) intent.getParcelableExtra(BeaconService.EXTRA_BEACON_ENTITY));
         } else if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
             int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
             if (state != -1) {
-                onBluetoothStateChanged(state);
+                onBluetoothStateChanged(context, state);
             }
         }
     }
 
-    //
-    // Todo: add getContext function or Context parameter to function
-    // 
-    protected void onFoundBeacon(BeaconEntity beaconEntity) {
-        // log
+    protected void onFoundBeacon(Context ctx, BeaconEntity beaconEntity) {
     }
 
     /**
      * @see android.bluetooth.BluetoothAdapter#ACTION_STATE_CHANGED
      */
-    protected void onBluetoothStateChanged(int state) {
+    protected void onBluetoothStateChanged(Context ctx, int state) {
     }
 
 } // BeaconReceiver
