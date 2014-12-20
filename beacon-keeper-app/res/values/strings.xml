@@ -19,7 +19,7 @@
   <string name="btn_about">about</string>
 
   <string name="about_title">@string/app_name</string>
-  <string name="about_text">Beacon Keeper is standalone application that shows usecases of it\'s own library.\nThe main goal of this project is to create solid and simple library for locating and working with iBeacons for Android.</string>
+  <string name="about_text">Beacon Keeper is standalone application that shows use cases of it\'s own library.\nThe main goal of this project is to create solid and simple library for locating and working with iBeacons for Android.</string>
   <string name="about_click_here">Click it here:</string>
   <string name="about_link">link</string>
   <string name="about_copyright">Copyright(c) 2014\nDmitry Mozgin</string>
