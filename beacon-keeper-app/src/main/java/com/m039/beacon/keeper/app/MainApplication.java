@@ -20,6 +20,8 @@ package com.m039.beacon.keeper.app;
 
 import android.app.Application;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.m039.beacon.keeper.service.BeaconService;
 
 /**
@@ -39,5 +41,16 @@ public class MainApplication extends Application {
 
         BeaconService.onApplicationCreate(this);
     }
+
+    Tracker mTracker = null;
+
+    public synchronized Tracker getTracker() {
+        if (mTracker == null) {
+            mTracker = GoogleAnalytics.getInstance(this).newTracker(R.xml.google_analytics_tracker);
+        }
+
+        return mTracker;
+    }
+
 
 } // MainApplication

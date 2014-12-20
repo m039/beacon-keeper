@@ -72,6 +72,20 @@
         <artifactId>compatibility-v4</artifactId>
         <version>20.0.0</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.google.android.gms</groupId>
+        <artifactId>google-play-services</artifactId>
+        <version>21.0.0</version>
+        <type>apklib</type>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.android.gms</groupId>
+        <artifactId>google-play-services</artifactId>
+        <version>21.0.0</version>
+        <type>jar</type>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

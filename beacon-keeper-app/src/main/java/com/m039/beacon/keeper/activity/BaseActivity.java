@@ -20,9 +20,13 @@ package com.m039.beacon.keeper.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.m039.beacon.keeper.app.MainApplication;
 import com.m039.beacon.keeper.content.BeaconEntity;
 import com.m039.beacon.keeper.receiver.BeaconReceiver;
 
@@ -59,6 +63,15 @@ public class BaseActivity extends Activity {
             }
 
         };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Tracker t = ((MainApplication) getApplication()).getTracker();
+        t.setScreenName(getClass().getSimpleName());
+        t.send(new HitBuilders.AppViewBuilder().build());
+    }
 
     @Override
     protected void onStart() {
