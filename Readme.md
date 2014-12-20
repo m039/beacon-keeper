@@ -5,7 +5,7 @@ Beacon Keeper is standalone application in [Google Play Market](https://play.goo
 
 The main goal of this project is to create solid and simple library for locating and working with iBeacons for Android.
 
-*This library is under devolpment*
+*This library is under development*
 
 Why use Beacon Keeper?
 ----------------------
