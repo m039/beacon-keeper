@@ -11,7 +11,7 @@ Why use Beacon Keeper?
 ----------------------
 
  * Locating iBeacons in background
- * Dead simple [samples]()
+ * Dead simple [samples](https://github.com/m039/beacon-keeper/tree/master/beacon-keeper-samples)
 
 Thanks
 ------
