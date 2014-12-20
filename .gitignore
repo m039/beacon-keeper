@@ -14,3 +14,6 @@ design
 beacon-keeper.apk
 release.keystore
 sign.sh
+doc/
+*.sig
+beacon-keeper-app/gen-external-apklibs/
