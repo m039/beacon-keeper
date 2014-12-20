@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="f_splash__text_height">55dp</dimen>
+  <dimen name="bar_height">200dp</dimen>
+  <dimen name="move_away_distance">200dp</dimen>
 
 </resources>

@@ -5,38 +5,103 @@
     android:layout_height="match_parent"
     >
 
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:orientation="vertical"
-      android:gravity="center"
+  <FrameLayout
+      android:id="@+id/disabled"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       >
 
-    <ImageView
-        android:id="@+id/logo"
-        android:src="@drawable/splash__logo"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/f_splash__text_height"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
         >
-      
+
+      <ImageView
+          android:src="@drawable/splash__logo"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="24dp"
+          >
+
+        <Switch
+            android:id="@+id/switcher"
+            android:thumb="@drawable/switcher_thumb"
+            android:track="@drawable/switcher_track"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:textOff="off"
+            android:textOn="on"
+            android:switchTextAppearance="@style/SwitchTextAppearance"
+            android:textColor="@android:color/white"
+            android:switchPadding="4dp"
+            android:switchMinWidth="74dp"
+            android:thumbTextPadding="12dp"
+            android:layout_gravity="center"
+            />
+
+        <ProgressBar
+            style="@android:style/Widget.DeviceDefault.ProgressBar"
+            android:id="@+id/switcher_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+      </FrameLayout>
+
       <TextView
-          android:id="@+id/text"
+          android:id="@+id/disabled_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:gravity="top|center_horizontal"
+          android:text="@string/f_splash_bluetooth_disabled"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          />
+
+    </LinearLayout>
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/enabled"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="invisible"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+      <ImageView
+          android:src="@drawable/splash__logo"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          android:id="@+id/enabled_label"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="10dp"
           android:gravity="top|center_horizontal"
-          android:text="@string/f_splash__text"
+          android:text="@string/f_splash_app_name"
           android:textColor="@color/white"
           />
 
-    </FrameLayout>
-
-  </LinearLayout>
-
+    </LinearLayout>
+  </FrameLayout>
 </FrameLayout>

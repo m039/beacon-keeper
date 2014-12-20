@@ -14,6 +14,11 @@
   <string name="preferences__beacon_ttl_ms__title">Beacon time to live</string>
   <string name="preferences__beacon_ttl_ms__summary">How long beacon considered visible</string>
 
-  <string name="f_splash__text">Beacon\nKeeper</string>
+  <string name="f_splash_app_name">Beacon\nKeeper</string>
+
+  <string name="f_splash_bluetooth_disabled">Bluetooth\ndisabled</string>
+  <string name="f_splash_bluetooth_enabled">Bluetooth\nenabled</string>
+  <string name="f_splash_bluetooth_turning_on">Enabling\nbluetooth</string>
+  <string name="f_splash_bluetooth_turning_off">Disabling\nbluetooth</string>
 
  </resources>

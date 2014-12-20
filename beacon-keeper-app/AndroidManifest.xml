@@ -14,7 +14,7 @@
                android:label="@string/app_name"
                android:name="com.m039.beacon.keeper.app.MainApplication">
 
-    <activity android:name="com.m039.beacon.keeper.activity.MainActivity"
+    <activity android:name="com.m039.beacon.keeper.activity.BeaconsActivity"
               android:theme="@style/Theme.Main"
               >
       <intent-filter>
@@ -22,6 +22,15 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <!-- <activity android:name="com.m039.beacon.keeper.activity.MainActivity" -->
+    <!--           android:theme="@style/Theme.Main" -->
+    <!--           > -->
+    <!--   <intent-filter> -->
+    <!--     <action android:name="android.intent.action.MAIN"/> -->
+    <!--     <category android:name="android.intent.category.LAUNCHER"/> -->
+    <!--   </intent-filter> -->
+    <!-- </activity> -->
 
     <activity android:name="com.m039.beacon.keeper.activity.MainOldActivity"/>
 
