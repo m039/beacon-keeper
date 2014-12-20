@@ -1,5 +1,5 @@
-/** SettingsActivity.java ---
- * 
+/** SettingsA.java ---
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,11 @@
 
 package com.m039.beacon.keeper.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.view.View;
 
 import com.m039.beacon.keeper.app.R;
 
@@ -30,24 +31,42 @@ import com.m039.beacon.keeper.app.R;
  *
  * Created:
  *
- * @author
- * @version
- * @since
+ * @author Dmitry Mozgin
+ * @version 1
+ * @since Sat Dec 20 08:11:50 2014
  */
-public class SettingsActivity extends BaseActivity {
-
-    public static void startActivity(Context ctx) {
-        ctx.startActivity(new Intent(ctx, SettingsActivity.class));
+public class SettingsA extends BaseActivity {
+    
+    public static void startActivity(Activity a) {
+        a.startActivity(new Intent(a, SettingsA.class));
+        a.overridePendingTransition (R.anim.enter_in, R.anim.enter_out);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.a_settings);
 
-        getFragmentManager()
-            .beginTransaction()
-            .replace(android.R.id.content, new SettingsFragment())
-            .commit();
+        if (savedInstanceState == null) {
+            getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, new SettingsFragment())
+                .commit();
+        }
+
+        findViewById(R.id.about).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AboutA.startActivity(SettingsA.this);
+                }
+            });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition (R.anim.finish_in, R.anim.finish_out);
     }
 
     public static class SettingsFragment extends PreferenceFragment {
@@ -60,4 +79,4 @@ public class SettingsActivity extends BaseActivity {
 
     }
     
-} // SettingsActivity
+} // SettingsA

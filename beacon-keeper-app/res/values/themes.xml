@@ -2,9 +2,9 @@
 <resources>
 
   <style name="Theme.Settings" parent="android:Theme.DeviceDefault.NoActionBar">
-  </style>
-
-  <style name="Theme.About" parent="android:Theme.DeviceDefault.NoActionBar">
+    <item name="android:windowBackground">@color/orange</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textColorSecondary">#f9bcb9</item>
   </style>
 
   <style name="Theme.Main" parent="android:Theme.DeviceDefault.NoActionBar">

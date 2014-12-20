@@ -1,16 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:text="SETTINGS"
-      />
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/bar_height"
+      android:orientation="horizontal"
+      android:background="@color/bar"
+      >
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
 
+      <ImageView
+          android:src="@drawable/ico_settings"
+          android:layout_width="@dimen/icon_width"
+          android:layout_height="@dimen/icon_height"
+          android:layout_gravity="center_horizontal"
+          android:scaleType="centerInside"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="8dp"
+          android:textSize="22sp"
+          android:textColor="@android:color/white"
+          android:textAllCaps="true"
+          android:text="@string/settings"
+          />
+
+    </LinearLayout>
+  </FrameLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <TextView
+        style="@style/button"
+        android:id="@+id/about"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_about"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="16dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/about"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        />
+
+  </RelativeLayout>
+</LinearLayout>

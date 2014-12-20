@@ -3,6 +3,10 @@
 
   <color name="orange">#ed4a3b</color>
   <color name="white">@android:color/white</color>
+  <color name="black">#000</color>
   <color name="blue">#00F</color>
+  <color name="green">#0F0</color>
+
+  <color name="bar">#1a1a1a</color>
 
 </resources>

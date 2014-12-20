@@ -42,8 +42,8 @@ public class BeaconEntity
     public static final int PRODUCER_UNKNOWN = 0;
     public static final int PRODUCER_ESTIMOTE = 1;
     public static final int PRODUCER_KONTAKT = 2;
-    public static final int PRODUCER_QUALCOMM = 3;
-    public static final int PRODUCER_STICKNFIND = 4;
+    public static final int PRODUCER_QUALCOMM = 3; // doesn't support yet
+    public static final int PRODUCER_STICKNFIND = 4; // doesn't support yet
 
     public static final int DISTANCE_FAR = 0;
     public static final int DISTANCE_NEAR = 1;

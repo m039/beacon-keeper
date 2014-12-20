@@ -1,16 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:text="ABOUT"
-      />
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/bar_height"
+      android:orientation="horizontal"
+      android:background="@color/bar"
+      >
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
 
+      <ImageView
+          android:src="@drawable/about_logo"
+          android:layout_width="@dimen/icon_width"
+          android:layout_height="@dimen/icon_height"
+          android:layout_gravity="center_horizontal"
+          android:scaleType="centerInside"
+          />
+
+    </LinearLayout>
+  </FrameLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:text="@string/about_title"
+        android:textAllCaps="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="16dp"
+        android:paddingRight="32dp"
+        android:paddingLeft="32dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="@string/about_text"
+        android:gravity="center"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"        
+        android:background="#f47a6a"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="@string/about_click_here"
+        />
+
+    <TextView
+        style="@style/button"
+        android:id="@+id/link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/about_link"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="64dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="@string/about_copyright"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/version_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        />
+
+  </LinearLayout>
+</LinearLayout>

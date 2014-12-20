@@ -1,14 +1,14 @@
-iBeacon Keeper
-==============
+Beacon Keeper
+=============
 
-iBeacon Keeper is standalone application in [Google Play Market](http://nowhere) and this library.
+Beacon Keeper is standalone application in [Google Play Market](http://nowhere) and this library.
 
 The main goal of this project is to create solid and simple library for locating and working with iBeacons for Android.
 
 *This library is under devolpment*
 
-Why use iBeacon Keeper?
------------------------
+Why use Beacon Keeper?
+----------------------
 
  * Locating iBeacons in background
  * Dead simple [samples]()

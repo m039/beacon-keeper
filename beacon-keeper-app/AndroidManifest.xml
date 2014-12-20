@@ -1,4 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0" package="com.m039.beacon.keeper.app">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="1.0.0"
+    package="com.m039.beacon.keeper.app"
+    >
 
   <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="19"/>
 
@@ -16,34 +22,29 @@
 
     <activity android:name="com.m039.beacon.keeper.activity.BeaconsA"
               android:theme="@style/Theme.Main"
+              android:screenOrientation="portrait"
               >
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+
     </activity>
 
     <activity android:name="com.m039.beacon.keeper.activity.BeaconA" 
               android:theme="@style/Theme.Main"
+              android:screenOrientation="portrait"
               />
 
-    <!-- <activity android:name="com.m039.beacon.keeper.activity.MainActivity" -->
-    <!--           android:theme="@style/Theme.Main" -->
-    <!--           > -->
-    <!--   <intent-filter> -->
-    <!--     <action android:name="android.intent.action.MAIN"/> -->
-    <!--     <category android:name="android.intent.category.LAUNCHER"/> -->
-    <!--   </intent-filter> -->
-    <!-- </activity> -->
-
-    <activity android:name="com.m039.beacon.keeper.activity.MainOldActivity"/>
-
-
-    <activity android:name="com.m039.beacon.keeper.activity.SettingsActivity" 
+    <activity android:name="com.m039.beacon.keeper.activity.SettingsA" 
               android:theme="@style/Theme.Settings"
+              android:screenOrientation="portrait"
               />
-    <activity android:name="com.m039.beacon.keeper.activity.AboutActivity" 
-              android:theme="@style/Theme.About"
+
+    <activity android:name="com.m039.beacon.keeper.activity.AboutA" 
+              android:theme="@style/Theme.Main"
+              android:screenOrientation="portrait"
               />
 
     <service android:name="com.m039.beacon.keeper.service.BeaconService"/>

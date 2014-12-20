@@ -37,7 +37,7 @@ import com.m039.beacon.keeper.U;
 import com.m039.beacon.keeper.adapter.BeaconEntityAdapter;
 import com.m039.beacon.keeper.app.R;
 import com.m039.beacon.keeper.content.BeaconEntity;
-import com.m039.beacon.keeper.fragment.SplashFragment;
+import com.m039.beacon.keeper.fragment.SplashF;
 import com.m039.beacon.keeper.widget.DividerItemDecoration;
 
 /**
@@ -50,7 +50,7 @@ import com.m039.beacon.keeper.widget.DividerItemDecoration;
  * @since Sat Dec 20 00:52:19 2014
  */
 public class BeaconsA extends BaseActivity
-    implements SplashFragment.OnSwitchBluetooth
+    implements SplashF.OnSwitchBluetooth
 {
 
     private static final int WHAT_RADAR_UPDATE = 0;
@@ -119,7 +119,7 @@ public class BeaconsA extends BaseActivity
         if (savedInstanceState == null) {
             getFragmentManager()
                 .beginTransaction()
-                .add(R.id.overlay, SplashFragment.newInstance())
+                .add(R.id.overlay, SplashF.newInstance())
                 .commit();
         }
     }
@@ -129,7 +129,7 @@ public class BeaconsA extends BaseActivity
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.settings) {
-                    SettingsActivity.startActivity(BeaconsA.this);
+                    SettingsA.startActivity(BeaconsA.this);
                 }
             }
 

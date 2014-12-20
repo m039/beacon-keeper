@@ -10,7 +10,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/bar_height"
       android:orientation="horizontal"
-      android:background="#1a1a1a"
+      android:background="@color/bar"
       >
 
     <LinearLayout
@@ -22,8 +22,8 @@
 
       <ImageView
           android:id="@+id/producer_icon"
-          android:layout_width="120dp"
-          android:layout_height="120dp"
+          android:layout_width="@dimen/icon_width"
+          android:layout_height="@dimen/icon_height"
           android:layout_gravity="center_horizontal"
           android:scaleType="centerInside"
           />

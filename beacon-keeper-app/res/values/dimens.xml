@@ -5,4 +5,7 @@
   <dimen name="move_away_distance">200dp</dimen>
   <dimen name="e_list_padding">24dp</dimen>
 
+  <dimen name="icon_width">100dp</dimen>
+  <dimen name="icon_height">100dp</dimen>
+
 </resources>

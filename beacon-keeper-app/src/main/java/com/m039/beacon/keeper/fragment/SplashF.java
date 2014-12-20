@@ -1,4 +1,4 @@
-/** SplashFragment.java ---
+/** SplashF.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
@@ -44,10 +44,10 @@ import com.m039.beacon.keeper.app.R;
  * @version 1
  * @since Fri Aug  8 23:05:19 2014
  */
-public class SplashFragment extends BaseFragment {
+public class SplashF extends BaseFragment {
 
-    public static SplashFragment newInstance() {
-        return new SplashFragment();
+    public static SplashF newInstance() {
+        return new SplashF();
     }
 
     @Override
@@ -210,4 +210,4 @@ public class SplashFragment extends BaseFragment {
     }
 
 
-} // SplashFragment
+} // SplashF
