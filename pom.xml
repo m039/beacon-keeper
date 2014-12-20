@@ -7,7 +7,7 @@
 
   <groupId>com.m039.beacon.keeper</groupId>
   <artifactId>parent</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
 
   <packaging>pom</packaging>
 
@@ -61,13 +61,6 @@
       </dependency>
 
       <dependency>
-        <groupId>com.android.support</groupId>
-        <artifactId>cardview-v7</artifactId>
-        <version>21.0.0-rc1</version>
-        <type>aar</type>
-      </dependency>
-
-      <dependency>
         <groupId>android.support</groupId>
         <artifactId>compatibility-v4</artifactId>
         <version>20.0.0</version>
@@ -94,6 +87,25 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>m2e</id>
+      <activation>
+        <property>
+          <name>m2e.version</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.android.support</groupId>
+          <artifactId>recyclerview-v7</artifactId>
+          <version>21.0.0-rc1</version>
+          <type>jar</type>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 
   <build>
     <pluginManagement>
