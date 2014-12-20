@@ -86,6 +86,12 @@
         <version>21.0.0</version>
         <type>jar</type>
       </dependency>
+
+      <dependency>
+	<groupId>uk.co.chrisjenx</groupId>
+	<artifactId>calligraphy</artifactId>
+	<version>1.2.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

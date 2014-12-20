@@ -18,6 +18,8 @@
 
 package com.m039.beacon.keeper.activity;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -71,6 +73,11 @@ public class BaseActivity extends Activity {
         Tracker t = ((MainApplication) getApplication()).getTracker();
         t.setScreenName(getClass().getSimpleName());
         t.send(new HitBuilders.AppViewBuilder().build());
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
     @Override

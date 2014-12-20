@@ -56,6 +56,11 @@
       <artifactId>google-play-services</artifactId>
       <type>jar</type>
     </dependency>
+
+    <dependency>
+      <groupId>uk.co.chrisjenx</groupId>
+      <artifactId>calligraphy</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

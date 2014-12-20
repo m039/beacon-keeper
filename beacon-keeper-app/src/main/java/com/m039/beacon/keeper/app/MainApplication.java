@@ -18,6 +18,8 @@
 
 package com.m039.beacon.keeper.app;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 import android.app.Application;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -40,6 +42,8 @@ public class MainApplication extends Application {
         super.onCreate ();
 
         BeaconService.onApplicationCreate(this);
+
+        CalligraphyConfig.initDefault("fonts/Intro-Regular.otf", R.attr.fontPath);
     }
 
     Tracker mTracker = null;

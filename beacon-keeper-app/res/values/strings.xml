@@ -4,7 +4,7 @@
   <string name="a_demo__ble_enabled">BLE enabled</string>
   <string name="a_demo__ble_disabled">BLE disabled</string>
 
-  <string name="app_name">Beacon Keeper</string>
+  <string name="app_name">Beacon\nKeeper</string>
 
   <string name="main__on_empty">No beacons</string>
   <string name="main__found">%1$s beacons found</string>
