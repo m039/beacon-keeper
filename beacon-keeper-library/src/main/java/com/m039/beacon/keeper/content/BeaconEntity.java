@@ -1,5 +1,5 @@
 /** BeaconEntity.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.content;
@@ -42,6 +42,8 @@ public class BeaconEntity
     public static final int PRODUCER_UNKNOWN = 0;
     public static final int PRODUCER_ESTIMOTE = 1;
     public static final int PRODUCER_KONTAKT = 2;
+    public static final int PRODUCER_QUALCOMM = 3;
+    public static final int PRODUCER_STICKNFIND = 4;
 
     public static final int DISTANCE_FAR = 0;
     public static final int DISTANCE_NEAR = 1;
@@ -74,6 +76,10 @@ public class BeaconEntity
         return mIBeacon.getProximityUuid();
     }
 
+    public String getUuid() {
+        return mIBeacon.getProximityUuid();
+    }
+
     public int getMajor() {
         return mIBeacon.getMajor();
     }
@@ -88,6 +94,16 @@ public class BeaconEntity
 
     public int getProducer() {
         return mProducer;
+    }
+
+    public String getProducerName() {
+        if (mProducer == BeaconEntity.PRODUCER_ESTIMOTE) {
+            return "Estimote";
+        } else if (mProducer == BeaconEntity.PRODUCER_KONTAKT) {
+            return "Kontakt";
+        } else {
+            return "Unknown";
+        }
     }
 
     public int getDistance() {
@@ -150,7 +166,7 @@ public class BeaconEntity
 
         BeaconEntity lhs = (BeaconEntity) o;
 
-        return (mIBeacon == null? 
+        return (mIBeacon == null?
                 lhs.mIBeacon == null : mIBeacon.equals(lhs.mIBeacon));
     }
 

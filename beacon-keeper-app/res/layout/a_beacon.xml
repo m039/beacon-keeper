@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/bar_height"
+      android:orientation="horizontal"
+      android:background="#1a1a1a"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+      <ImageView
+          android:id="@+id/producer_icon"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:layout_gravity="center_horizontal"
+          android:scaleType="centerInside"
+          />
+
+      <TextView
+          style="@style/a_beacon_text_2"
+          android:id="@+id/producer_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="8dp"
+          />
+
+    </LinearLayout>
+  </FrameLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="@dimen/e_list_padding"
+      >
+
+    <TextView
+        style="@style/a_beacon_text_1"
+        android:id="@+id/uuid_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UUID"
+        />
+
+    <TextView
+        style="@style/a_beacon_text"
+        android:id="@+id/uuid"
+        android:layout_below="@id/uuid_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_below="@id/uuid"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="14dp"
+        android:background="#f47a6a"
+        />
+
+    <LinearLayout
+        android:id="@+id/labels"
+        android:layout_below="@id/separator"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        >
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="major"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="minor"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="txPower"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="accuracy"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="distance"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="lastUpdate"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@id/labels"
+        android:layout_below="@id/separator"
+        >
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/major"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/minor"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/tx_power"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/accuracy"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/distance"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          style="@style/a_beacon_text"
+          android:id="@+id/last_update"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+    </LinearLayout>
+  </RelativeLayout>
+</LinearLayout>

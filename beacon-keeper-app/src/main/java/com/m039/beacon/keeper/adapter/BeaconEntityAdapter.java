@@ -108,7 +108,7 @@ public class BeaconEntityAdapter
         TextView uuid;
         TextView major;
         TextView minor;
-        TextView producer;
+        TextView producerName;
 
         ViewHolder(View v) {
             super(v);
@@ -116,7 +116,7 @@ public class BeaconEntityAdapter
             uuid = (TextView) v.findViewById(R.id.uuid);
             major = (TextView) v.findViewById(R.id.major);
             minor = (TextView) v.findViewById(R.id.minor);
-            producer = (TextView) v.findViewById(R.id.producer);
+            producerName = (TextView) v.findViewById(R.id.producer_name);
         }
 
     }
@@ -150,25 +150,15 @@ public class BeaconEntityAdapter
     public void onBindViewHolder(ViewHolder h, int position) {
         BeaconEntity beaconEntity = mBeaconEntities.get(position);
 
-        h.uuid.setText(beaconEntity.getProximityUuid());
+        h.uuid.setText(beaconEntity.getUuid());
         h.major.setText(String.valueOf(beaconEntity.getMajor()));
         h.minor.setText(String.valueOf(beaconEntity.getMinor()));
-        h.producer.setText(getProducerName(beaconEntity));
+        h.producerName.setText(beaconEntity.getProducerName());
     }
 
     @Override
     public int getItemCount() {
         return mBeaconEntities.size();
-    }
-
-    private static String getProducerName(BeaconEntity beaconEntity) {
-        if (beaconEntity.getProducer() == BeaconEntity.PRODUCER_ESTIMOTE) {
-            return "Estimote";
-        } else if (beaconEntity.getProducer() == BeaconEntity.PRODUCER_KONTAKT) {
-            return "Kontakt";
-        } else {
-            return "Unknown";
-        }
     }
 
 } // BeaconEntityAdapter

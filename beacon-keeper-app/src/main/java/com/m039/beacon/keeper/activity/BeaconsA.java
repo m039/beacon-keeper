@@ -1,4 +1,4 @@
-/** BeaconsActivity.java ---
+/** BeaconsA.java ---
  *
  * Copyright (C) 2014 Dmitry Mozgin
  *
@@ -49,7 +49,7 @@ import com.m039.beacon.keeper.widget.DividerItemDecoration;
  * @version 1
  * @since Sat Dec 20 00:52:19 2014
  */
-public class BeaconsActivity extends BaseActivity
+public class BeaconsA extends BaseActivity
     implements SplashFragment.OnSwitchBluetooth
 {
 
@@ -80,7 +80,7 @@ public class BeaconsActivity extends BaseActivity
 
             @Override
             protected void onClick(BeaconEntity beaconEntity) {
-                BeaconInfoActivity.startActivity(BeaconsActivity.this, beaconEntity);
+                BeaconA.startActivity(BeaconsA.this, beaconEntity);
             }
 
         };
@@ -129,7 +129,7 @@ public class BeaconsActivity extends BaseActivity
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.settings) {
-                    SettingsActivity.startActivity(BeaconsActivity.this);
+                    SettingsActivity.startActivity(BeaconsA.this);
                 }
             }
 
@@ -335,4 +335,4 @@ public class BeaconsActivity extends BaseActivity
         mAnimatorHelper.close();
     }
 
-} // BeaconsActivity
+} // BeaconsA

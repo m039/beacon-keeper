@@ -7,7 +7,7 @@
     >
 
   <TextView
-      android:id="@+id/producer"
+      android:id="@+id/producer_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textColor="@android:color/white"
@@ -18,7 +18,7 @@
   <TextView
       style="@style/e_list_text"
       android:id="@+id/uuid_label"
-      android:layout_below="@id/producer"
+      android:layout_below="@id/producer_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
@@ -28,7 +28,7 @@
   <TextView
       style="@style/e_list_text"
       android:id="@+id/uuid"
-      android:layout_below="@id/producer"
+      android:layout_below="@id/producer_name"
       android:layout_toRightOf="@id/uuid_label"
       android:layout_marginLeft="4dp"
       android:layout_marginTop="8dp"
