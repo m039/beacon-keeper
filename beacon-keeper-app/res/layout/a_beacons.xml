@@ -19,33 +19,87 @@
         android:scrollbars="none"
         >
 
-      <FrameLayout
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_gravity="center"
+          android:layout_gravity="center_vertical"
+          android:orientation="horizontal"
           >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="34"
-            android:background="#FFF"
-            android:textColor="#000"
-            android:textSize="45sp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:layout_gravity="center"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             />
+        
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+          
+          <ImageView
+              android:src="@drawable/radar_circle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              />
 
-      </FrameLayout>
+          <ImageView
+              android:id="@+id/radar"
+              android:src="@drawable/radar"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              />        
 
+          <TextView
+              android:id="@+id/number_of_beacons"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:textColor="#FFF"
+              android:textSize="32sp"
+              android:paddingTop="20dp"
+              android:paddingBottom="20dp"
+              />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+          <ImageView
+              android:id="@+id/settings"
+              android:src="@drawable/btn_settings"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              />
+
+        </FrameLayout>
+      </LinearLayout>
     </ScrollView>
 
     <FrameLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="vertical"
+          />
+
+    </FrameLayout>
 
   </LinearLayout>
 

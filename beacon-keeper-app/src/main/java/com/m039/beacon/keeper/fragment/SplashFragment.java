@@ -102,11 +102,15 @@ public class SplashFragment extends BaseFragment {
     }
 
     public interface OnSwitchBluetooth {
+
         public void onBluetoothSwitchOn();
+
         public void onBluetoothSwitchOff();
+
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent == null)
@@ -133,7 +137,6 @@ public class SplashFragment extends BaseFragment {
                                     ((OnSwitchBluetooth) a).onBluetoothSwitchOff();
                                 }
                             }
-
                             break;
                         case BluetoothAdapter.STATE_ON:
                             mDisabledLabel.setText(R.string.f_splash_bluetooth_enabled);
@@ -144,7 +147,7 @@ public class SplashFragment extends BaseFragment {
 
                             mEnabled.setVisibility(View.VISIBLE);
                             mDisabled.setVisibility(View.INVISIBLE);
-                            
+
                             {
                                 Object a = getActivity();
                                 if (a instanceof OnSwitchBluetooth) {
@@ -168,8 +171,10 @@ public class SplashFragment extends BaseFragment {
                     }
                 }
             }
+
         };
 
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -189,7 +194,7 @@ public class SplashFragment extends BaseFragment {
             mSwitcher.setEnabled(true);
             mSwitcherPb.setVisibility(View.INVISIBLE);
 
-            a.registerReceiver(mBroadcastReceiver,
+            a.registerReceiver(mBroadcastReceiver, 
                                new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
         }
     }

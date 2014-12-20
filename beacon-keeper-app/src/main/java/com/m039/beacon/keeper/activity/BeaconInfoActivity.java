@@ -1,5 +1,5 @@
 /** BeaconInfoActivity.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.activity;
@@ -39,7 +39,7 @@ import com.m039.beacon.keeper.receiver.BeaconReceiver;
  */
 public class BeaconInfoActivity extends BaseActivity {
 
-    public static final String EXTRA_BEACON_ENTITY = 
+    public static final String EXTRA_BEACON_ENTITY =
         "com.m039.beacon.keeper.activity.extra.beacon_entity";
 
     private TextView mProximityUuid;
@@ -49,9 +49,9 @@ public class BeaconInfoActivity extends BaseActivity {
     private TextView mAccuracy;
     private TextView mDistance;
     private TextView mLastUpdate;
-    
+
     @SuppressWarnings("unused")
-	private ImageView mProducer;
+    private ImageView mProducer;
 
     private BeaconEntity mBeaconEntity;
 
@@ -65,7 +65,7 @@ public class BeaconInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_beacon_info);
-        
+
         mBeaconEntity = (BeaconEntity) getIntent()
             .getParcelableExtra(EXTRA_BEACON_ENTITY);
     }
@@ -85,41 +85,41 @@ public class BeaconInfoActivity extends BaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        mProximityUuid = (TextView) findViewById(R.id.proximity_uuid);
-        mMajor = (TextView) findViewById(R.id.major);
-        mMinor = (TextView) findViewById(R.id.minor);
-        mTxPower = (TextView) findViewById(R.id.tx_power);
-        mAccuracy = (TextView) findViewById(R.id.accuracy);
-        mDistance = (TextView) findViewById(R.id.distance);
-        mLastUpdate = (TextView) findViewById(R.id.last_update);
-        mProducer = (ImageView) findViewById(R.id.producer);        
+        // mProximityUuid = (TextView) findViewById(R.id.proximity_uuid);
+        // mMajor = (TextView) findViewById(R.id.major);
+        // mMinor = (TextView) findViewById(R.id.minor);
+        // mTxPower = (TextView) findViewById(R.id.tx_power);
+        // mAccuracy = (TextView) findViewById(R.id.accuracy);
+        // mDistance = (TextView) findViewById(R.id.distance);
+        // mLastUpdate = (TextView) findViewById(R.id.last_update);
+        // mProducer = (ImageView) findViewById(R.id.producer);
 
         onPeriodicUpdate();
     }
 
     @Override
     protected void onPeriodicUpdate() {
-        mProximityUuid.setText(mBeaconEntity.getProximityUuid());
-        mMajor.setText(String.valueOf(mBeaconEntity.getMajor()));
-        mMinor.setText(String.valueOf(mBeaconEntity.getMinor()));
-        mTxPower.setText(String.valueOf(mBeaconEntity.getTxPower()));
-        mAccuracy.setText(String.format("%.2f", mBeaconEntity.getAccuracy()));
-        mLastUpdate.setText(U.IBeacon.getLastUpdate(mBeaconEntity));
-        mDistance.setText(mBeaconEntity.getDistanceStringId());
+        // mProximityUuid.setText(mBeaconEntity.getProximityUuid());
+        // mMajor.setText(String.valueOf(mBeaconEntity.getMajor()));
+        // mMinor.setText(String.valueOf(mBeaconEntity.getMinor()));
+        // mTxPower.setText(String.valueOf(mBeaconEntity.getTxPower()));
+        // mAccuracy.setText(String.format("%.2f", mBeaconEntity.getAccuracy()));
+        // mLastUpdate.setText(U.IBeacon.getLastUpdate(mBeaconEntity));
+        // mDistance.setText(mBeaconEntity.getDistanceStringId());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        mBeaconReceiver.registerReceiver(this);
+        mBeaconReceiver.register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        mBeaconReceiver.unregisterReceiver(this);
+        mBeaconReceiver.unregister(this);
     }
 
 } // BeaconInfoActivity

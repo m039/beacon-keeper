@@ -21,17 +21,24 @@ package com.m039.beacon.keeper.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.m039.beacon.keeper.U;
+import com.m039.beacon.keeper.adapter.BeaconEntityAdapter;
 import com.m039.beacon.keeper.app.R;
+import com.m039.beacon.keeper.content.BeaconEntity;
 import com.m039.beacon.keeper.fragment.SplashFragment;
-
-// import com.m039.beacon.keeper.L;
+import com.m039.beacon.keeper.widget.DividerItemDecoration;
 
 /**
  *
@@ -42,13 +49,41 @@ import com.m039.beacon.keeper.fragment.SplashFragment;
  * @version 1
  * @since Sat Dec 20 00:52:19 2014
  */
-public class BeaconsActivity extends BaseActivity 
+public class BeaconsActivity extends BaseActivity
     implements SplashFragment.OnSwitchBluetooth
 {
+
+    private static final int WHAT_RADAR_UPDATE = 0;
 
     private ViewGroup mTop;
     private ViewGroup mBottom;
     private ViewGroup mOverlay;
+
+    private TextView mNumberOfBeacons;
+    private RecyclerView mRecycler;
+    private View mRadar;
+
+    private Handler mRadarHandler = new Handler() {
+
+            @Override
+            public void handleMessage (Message msg) {
+                if (msg.what == WHAT_RADAR_UPDATE) {
+                    onRadarUpdate();
+                    sendEmptyMessageDelayed(msg.what, 100);
+                }
+            }
+
+        };
+
+    private BeaconEntityAdapter mBeaconEntityAdapter =
+        new BeaconEntityAdapter() {
+
+            @Override
+            protected void onClick(BeaconEntity beaconEntity) {
+                BeaconInfoActivity.startActivity(BeaconsActivity.this, beaconEntity);
+            }
+
+        };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,18 +94,64 @@ public class BeaconsActivity extends BaseActivity
         mBottom = (ViewGroup) findViewById(R.id.bottom);
         mOverlay = (ViewGroup) findViewById(R.id.overlay);
 
-        if (savedInstanceState == null) {
-            getFragmentManager()
-                .beginTransaction()
-                .add(R.id.overlay, SplashFragment.newInstance())
-                .commit();
+        mNumberOfBeacons = (TextView) findViewById(R.id.number_of_beacons);
+        mRecycler = (RecyclerView) findViewById(R.id.recycler);
+        mRadar = findViewById(R.id.radar);
+
+        if (mRecycler != null) {
+            mRecycler.setHasFixedSize(true);
+            mRecycler.setLayoutManager(new LinearLayoutManager(this));
+            mRecycler.setItemAnimator(new DefaultItemAnimator());
+            mRecycler.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+            mRecycler.setAdapter(mBeaconEntityAdapter);
         }
+
+        findViewById(R.id.settings).setOnClickListener(mOnButtonClickListener);
 
         // Default State
 
         mOverlay.setVisibility(View.VISIBLE);
         mTop.setVisibility(View.INVISIBLE);
         mBottom.setVisibility(View.INVISIBLE);
+
+        // fragments
+
+        if (savedInstanceState == null) {
+            getFragmentManager()
+                .beginTransaction()
+                .add(R.id.overlay, SplashFragment.newInstance())
+                .commit();
+        }
+    }
+
+    View.OnClickListener mOnButtonClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.settings) {
+                    SettingsActivity.startActivity(BeaconsActivity.this);
+                }
+            }
+
+        };
+
+    @Override
+    protected void onFoundBeacon(BeaconEntity beaconEntity) {
+        mBeaconEntityAdapter.replace(beaconEntity);
+    }
+
+    @Override
+    protected void onPeriodicUpdate() {
+        Resources res = getResources();
+
+        mBeaconEntityAdapter
+            .removeOld(U.SharedPreferences.getInteger(this, res.getString(R.string.beacon_keeper__pref_key__beacon_ttl_ms),res.getInteger(R.integer.beacon_keeper__beacon_ttl_ms_default)));
+        mBeaconEntityAdapter
+            .notifyDataSetChanged();
+
+        if (mNumberOfBeacons != null) {
+            mNumberOfBeacons.setText(String.valueOf(mBeaconEntityAdapter.getItemCount()));
+        }
     }
 
     @Override
@@ -78,20 +159,16 @@ public class BeaconsActivity extends BaseActivity
         super.onPostCreate(savedInstanceState);
 
         if (U.BLE.isEnabled(this)) {
-            new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAnimatorHelper.open();
-                    }
-                }, 700);            
+            mAnimatorHelper.open();
         } else {
-            mAnimatorHelper.close();            
+            mAnimatorHelper.close();
         }
     }
 
     public static class AnimatorHelper {
 
         private static final long DURATION = 500L;
+        private static final long START_DELAY = 700L;
         private static final String PROPERTY_NAME = "value";
 
         private float mValue = 0; // initial state
@@ -131,6 +208,7 @@ public class BeaconsActivity extends BaseActivity
             mAnimator = new ObjectAnimator();
             mAnimator.addListener(mAnimatorListenerAdapter);
             mAnimator.setDuration(DURATION);
+            mAnimator.setStartDelay(START_DELAY);
             mAnimator.setProperty(mProperty);
             mAnimator.setPropertyName(PROPERTY_NAME);
             mAnimator.setTarget(this);
@@ -197,6 +275,8 @@ public class BeaconsActivity extends BaseActivity
 
                 mOverlay.setAlpha(iv);
                 mOverlay.setTranslationY(moveAwayDistance * v);
+
+                mBottom.setAlpha(v);
             }
 
             @Override
@@ -224,6 +304,26 @@ public class BeaconsActivity extends BaseActivity
             }
 
         };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mRadarHandler.sendEmptyMessage(WHAT_RADAR_UPDATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mRadarHandler.removeMessages(WHAT_RADAR_UPDATE);
+    }
+
+    protected void onRadarUpdate() {
+        if (mTop.getVisibility() == View.VISIBLE) {
+            mRadar.setRotation(mRadar.getRotation() + 2);
+        }
+    }
 
     @Override
     public void onBluetoothSwitchOn() {

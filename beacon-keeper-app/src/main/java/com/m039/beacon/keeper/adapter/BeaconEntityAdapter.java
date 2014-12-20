@@ -1,5 +1,5 @@
 /** Beacon.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.adapter;
@@ -26,10 +26,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.m039.beacon.keeper.U;
 import com.m039.beacon.keeper.app.R;
 import com.m039.beacon.keeper.content.BeaconEntity;
 
@@ -107,26 +105,18 @@ public class BeaconEntityAdapter
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView proximityUuid;
+        TextView uuid;
         TextView major;
         TextView minor;
-        TextView txPower;
-        TextView accuracy;
-        TextView distance;
-        TextView lastUpdate;
-        ImageView producer;
+        TextView producer;
 
         ViewHolder(View v) {
             super(v);
 
-            proximityUuid = (TextView) v.findViewById(R.id.proximity_uuid);
+            uuid = (TextView) v.findViewById(R.id.uuid);
             major = (TextView) v.findViewById(R.id.major);
             minor = (TextView) v.findViewById(R.id.minor);
-            txPower = (TextView) v.findViewById(R.id.tx_power);
-            accuracy = (TextView) v.findViewById(R.id.accuracy);
-            distance = (TextView) v.findViewById(R.id.distance);
-            lastUpdate = (TextView) v.findViewById(R.id.last_update);
-            producer = (ImageView) v.findViewById(R.id.producer);
+            producer = (TextView) v.findViewById(R.id.producer);
         }
 
     }
@@ -160,14 +150,10 @@ public class BeaconEntityAdapter
     public void onBindViewHolder(ViewHolder h, int position) {
         BeaconEntity beaconEntity = mBeaconEntities.get(position);
 
-        h.proximityUuid.setText(beaconEntity.getProximityUuid());
+        h.uuid.setText(beaconEntity.getProximityUuid());
         h.major.setText(String.valueOf(beaconEntity.getMajor()));
         h.minor.setText(String.valueOf(beaconEntity.getMinor()));
-        h.txPower.setText(String.valueOf(beaconEntity.getTxPower()));
-        h.accuracy.setText(String.format("%.2f", beaconEntity.getAccuracy()));
-        h.lastUpdate.setText(U.IBeacon.getLastUpdate(beaconEntity));
-        h.distance.setText(beaconEntity.getDistanceStringId());
-        h.producer.setImageResource(getProducerDrawableId(beaconEntity));
+        h.producer.setText(getProducerName(beaconEntity));
     }
 
     @Override
@@ -175,13 +161,13 @@ public class BeaconEntityAdapter
         return mBeaconEntities.size();
     }
 
-    private static int getProducerDrawableId(BeaconEntity beaconEntity) {
+    private static String getProducerName(BeaconEntity beaconEntity) {
         if (beaconEntity.getProducer() == BeaconEntity.PRODUCER_ESTIMOTE) {
-            return R.drawable.beacon_entity__producer__estimote;
+            return "Estimote";
         } else if (beaconEntity.getProducer() == BeaconEntity.PRODUCER_KONTAKT) {
-            return R.drawable.beacon_entity__producer__kontakt;
+            return "Kontakt";
         } else {
-            return R.drawable.beacon_entity__producer__unknown;
+            return "Unknown";
         }
     }
 

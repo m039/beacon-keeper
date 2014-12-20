@@ -1,5 +1,5 @@
 /** BaseActivity.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +13,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+
+import com.m039.beacon.keeper.content.BeaconEntity;
+import com.m039.beacon.keeper.receiver.BeaconReceiver;
 
 /**
  *
@@ -36,6 +40,7 @@ public class BaseActivity extends Activity {
     private static final int WHAT_PERIODIC_UPDATE = 0;
 
     private Handler mHandler = new Handler() {
+
             @Override
             public void handleMessage (Message msg) {
                 if (msg.what == WHAT_PERIODIC_UPDATE) {
@@ -43,12 +48,23 @@ public class BaseActivity extends Activity {
                     sendEmptyMessageDelayed(msg.what, 1000);
                 }
             }
+
+        };
+
+    private BeaconReceiver mBeaconReceiver = new BeaconReceiver() {
+
+            @Override
+            protected void onFoundBeacon(Context ctx, BeaconEntity beaconEntity) {
+                BaseActivity.this.onFoundBeacon(beaconEntity);
+            }
+
         };
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        mBeaconReceiver.register(this);
         startHandleMessages();
     }
 
@@ -56,8 +72,9 @@ public class BaseActivity extends Activity {
     protected void onStop() {
         super.onStop();
 
+        mBeaconReceiver.unregister(this);
         stopHandleMessages();
-    }    
+    }
 
     private void startHandleMessages() {
         mHandler.sendEmptyMessage(WHAT_PERIODIC_UPDATE);
@@ -68,6 +85,9 @@ public class BaseActivity extends Activity {
     }
 
     protected void onPeriodicUpdate() {
+    }
+
+    protected void onFoundBeacon(BeaconEntity beaconEntity) {
     }
 
 } // BaseActivity

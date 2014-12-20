@@ -1,5 +1,5 @@
 /** BeaconReceiver.java ---
- * 
+ *
  * Copyright (C) 2014 Dmitry Mozgin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.m039.beacon.keeper.receiver;
@@ -53,11 +53,11 @@ public class BeaconReceiver extends BroadcastReceiver
         ctx.unregisterReceiver(br);
     }
 
-    public Intent registerReceiver(Context ctx) {
+    public Intent register(Context ctx) {
         return registerReceiver(ctx, this);
     }
 
-    public void unregisterReceiver(Context ctx) {
+    public void unregister(Context ctx) {
         unregisterReceiver(ctx, this);
     }
 

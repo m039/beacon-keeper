@@ -3,5 +3,6 @@
 
   <dimen name="bar_height">200dp</dimen>
   <dimen name="move_away_distance">200dp</dimen>
+  <dimen name="e_list_padding">24dp</dimen>
 
 </resources>
