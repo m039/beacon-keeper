@@ -20,7 +20,6 @@ package com.m039.beacon.keeper.activity;
 
 import android.content.Context;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.m039.beacon.keeper.foreground_sample.R;
@@ -57,14 +56,14 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        mBeaconReceiver.registerReceiver(this);
+        mBeaconReceiver.register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        mBeaconReceiver.unregisterReceiver(this);
+        mBeaconReceiver.unregister(this);
     }
     
     

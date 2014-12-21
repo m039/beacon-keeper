@@ -72,12 +72,8 @@ public class BeaconEntity
         return mIBeacon;
     }
 
-    public String getProximityUuid() {
-        return mIBeacon.getProximityUuid();
-    }
-
     public String getUuid() {
-        return mIBeacon.getProximityUuid();
+        return mIBeacon.getUuid();
     }
 
     public int getMajor() {

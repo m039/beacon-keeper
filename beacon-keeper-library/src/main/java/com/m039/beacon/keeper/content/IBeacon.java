@@ -35,7 +35,7 @@ public final class IBeacon
                Comparable<IBeacon>
 {
 
-    protected String    mProximityUuid;
+    protected String    mUuid;
     protected int       mMajor;
     protected int       mMinor;
     protected int       mTxPower;
@@ -43,15 +43,15 @@ public final class IBeacon
     protected IBeacon() {
     }
 
-    public IBeacon(String proximityUuid, int major, int minor, int txPower) {
-        mProximityUuid = proximityUuid;
+    public IBeacon(String uuid, int major, int minor, int txPower) {
+        mUuid = uuid;
         mMajor = major;
         mMinor = minor;
         mTxPower = txPower;
     }
 
-    public String getProximityUuid() {
-        return mProximityUuid;
+    public String getUuid() {
+        return mUuid;
     }
 
     public int getMajor() {
@@ -70,7 +70,7 @@ public final class IBeacon
     public int hashCode() {
         int result = 17;
 
-        result = 31 * result + (mProximityUuid == null? 0 : mProximityUuid.hashCode());
+        result = 31 * result + (mUuid == null? 0 : mUuid.hashCode());
         result = 31 * result + mMinor;
         result = 31 * result + mMajor;
 
@@ -91,16 +91,16 @@ public final class IBeacon
 
         IBeacon lhs = (IBeacon) o;
 
-        return (mProximityUuid == null?
-                lhs.mProximityUuid == null : mProximityUuid.equalsIgnoreCase(lhs.mProximityUuid)) &&
+        return (mUuid == null?
+                lhs.mUuid == null : mUuid.equalsIgnoreCase(lhs.mUuid)) &&
             mMajor == lhs.mMajor &&
             mMinor == lhs.mMinor;
     }
 
     @Override
     public String toString() {
-        return String.format("IBeacon proximityUuid: '%s', major: %d, minor: %d, txPower: %d",
-                             mProximityUuid, mMajor, mMinor, mTxPower);
+        return String.format("IBeacon uuid: '%s', major: %d, minor: %d, txPower: %d",
+                             mUuid, mMajor, mMinor, mTxPower);
     }
 
     @Override
@@ -111,7 +111,7 @@ public final class IBeacon
         
         int compare;
 
-        compare = mProximityUuid.compareTo(another.mProximityUuid);
+        compare = mUuid.compareTo(another.mUuid);
         if (compare != 0) {
             return compare;
         }
@@ -129,7 +129,7 @@ public final class IBeacon
     //
 
     private IBeacon(Parcel in) {
-        mProximityUuid = in.readString();
+        mUuid = in.readString();
         mMajor = in.readInt();
         mMinor = in.readInt();
         mTxPower = in.readInt();
@@ -140,7 +140,7 @@ public final class IBeacon
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(mProximityUuid);
+        out.writeString(mUuid);
         out.writeInt(mMajor);
         out.writeInt(mMinor);
         out.writeInt(mTxPower);

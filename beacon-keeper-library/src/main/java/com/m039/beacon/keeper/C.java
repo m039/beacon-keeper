@@ -18,6 +18,8 @@
 
 package com.m039.beacon.keeper;
 
+import com.m039.beacon.keeper.library.BuildConfig;
+
 /**
  * 
  *
@@ -29,7 +31,7 @@ package com.m039.beacon.keeper;
  */
 public class C {
 
-    public final static boolean DEBUG = true;
+    public final static boolean DEBUG = BuildConfig.DEBUG;
     public final static int NO_ID = 0;
 
 } // C

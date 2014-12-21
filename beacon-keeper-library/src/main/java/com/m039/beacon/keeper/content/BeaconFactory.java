@@ -78,7 +78,7 @@ public class BeaconFactory {
                 return null;
             }
 
-            byte proximityUuid[] = Arrays
+            byte uuid[] = Arrays
                 .copyOfRange(scanRecord, PROXIMITY_UUID_START, PROXIMITY_UUID_END);
             byte major[] = Arrays
                 .copyOfRange(scanRecord, MAJOR_START, MAJOR_END);
@@ -89,7 +89,7 @@ public class BeaconFactory {
 
             IBeacon iBeacon = new IBeacon();
 
-            iBeacon.mProximityUuid = toProximityUuidString(proximityUuid);
+            iBeacon.mUuid = toUuidString(uuid);
             iBeacon.mMajor = (major[0] & 0xff) * 0x100 + (major[1] & 0xff);
             iBeacon.mMinor = (minor[0] & 0xff) * 0x100 + (minor[1] & 0xff);
             iBeacon.mTxPower = txPower[0];
@@ -128,8 +128,8 @@ public class BeaconFactory {
         return beaconEntity;
     }
 
-    private static String toProximityUuidString(byte proximityUuid[]) {
-        if (proximityUuid == null || proximityUuid.length != 16) {
+    private static String toUuidString(byte uuid[]) {
+        if (uuid == null || uuid.length != 16) {
             return "00000000-0000-0000-0000-000000000000";
         }
 
@@ -138,31 +138,31 @@ public class BeaconFactory {
         int k = 0;
 
         for (int i = 0; i < 4; i++) {
-            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", uuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", uuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", uuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 2; i++) {
-            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", uuid[k++] & 0xff));
         }
 
         sb.append('-');
 
         for (int i = 0; i < 6; i++) {
-            sb.append(String.format("%02x", proximityUuid[k++] & 0xff));
+            sb.append(String.format("%02x", uuid[k++] & 0xff));
         }
 
         return sb.toString();
@@ -171,7 +171,7 @@ public class BeaconFactory {
     private static void fillProducer(BeaconEntity beaconEntity) {
         int producer = BeaconEntity.PRODUCER_UNKNOWN;
 
-        String proximityUuid = beaconEntity.getProximityUuid();
+        String proximityUuid = beaconEntity.getUuid();
 
         if (proximityUuid.equalsIgnoreCase("b9407f30-f5f8-466e-aff9-25556b57fe6d")) {
             producer = BeaconEntity.PRODUCER_ESTIMOTE;

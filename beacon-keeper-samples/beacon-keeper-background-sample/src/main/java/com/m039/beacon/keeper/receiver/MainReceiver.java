@@ -49,7 +49,7 @@ public class MainReceiver extends com.m039.beacon.keeper.receiver.BeaconReceiver
     }
 
     @Override
-    protected void onFoundBeacon(BeaconEntity beaconEntity) {
+    protected void onFoundBeacon(Context context, BeaconEntity beaconEntity) {
         android.util.Log.d("MainReceiver", "onFoundBeacon | " + beaconEntity.getIBeacon());
     }
 

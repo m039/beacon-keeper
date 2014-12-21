@@ -7,9 +7,8 @@
 
   <parent>
     <groupId>com.m039.beacon.keeper</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>samples</artifactId>
     <version>1.0.0</version>
-    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>beacon-keeper-foreground-sample</artifactId>

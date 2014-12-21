@@ -9,7 +9,6 @@
     <groupId>com.m039.beacon.keeper</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>beacon-keeper-app</artifactId>
