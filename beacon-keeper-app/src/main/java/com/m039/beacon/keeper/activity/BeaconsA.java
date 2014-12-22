@@ -154,17 +154,6 @@ public class BeaconsA extends BaseActivity
         }
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        if (U.BLE.isEnabled(this)) {
-            mAnimatorHelper.open();
-        } else {
-            mAnimatorHelper.close();
-        }
-    }
-
     public static class AnimatorHelper {
 
         private static final long DURATION = 500L;
@@ -229,15 +218,21 @@ public class BeaconsA extends BaseActivity
         }
 
         public void open() {
+            if (mValue == 1)
+                return;         // don't do anything
+
             if (mAnimator.isRunning()) {
                 mAnimator.cancel();
-            }
+            }            
 
             mAnimator.setFloatValues(mValue, 1);
             mAnimator.start();
         }
 
         public void close() {
+            if (mValue == 0)
+                return;         // don't do anything
+
             if (mAnimator.isRunning()) {
                 mAnimator.cancel();
             }
@@ -306,6 +301,17 @@ public class BeaconsA extends BaseActivity
         };
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (U.BLE.isEnabled(this)) {
+            mAnimatorHelper.open();
+        } else {
+            mAnimatorHelper.close();
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -321,7 +327,7 @@ public class BeaconsA extends BaseActivity
 
     protected void onRadarUpdate() {
         if (mTop.getVisibility() == View.VISIBLE) {
-            mRadar.setRotation(mRadar.getRotation() + 2);
+            mRadar.setRotation(mRadar.getRotation() + 4);
         }
     }
 
