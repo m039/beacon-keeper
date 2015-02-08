@@ -15,5 +15,6 @@ beacon-keeper.apk
 release.keystore
 sign.sh
 doc/
+pom_back.xml
 *.sig
 beacon-keeper-app/gen-external-apklibs/

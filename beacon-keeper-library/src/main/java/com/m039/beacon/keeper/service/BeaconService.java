@@ -26,6 +26,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.IBinder;
 
 import com.m039.beacon.keeper.L;
@@ -145,8 +147,6 @@ public class BeaconService extends Service {
         return getIdleTimeMs(ctx) + getScanningTimeMs(ctx);
     }
 
-    private Handler mHandler = new Handler();
-
     private SimpleLeScanner mSimpleLeScanner = null;
     private SimpleLeScanner.LeScanCallback mLeScanCallback = new SimpleLeScanner.LeScanCallback() {
             @Override
@@ -156,20 +156,32 @@ public class BeaconService extends Service {
         };
 
     private long mRunningTimeDebug = 0;
+    private Handler mHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mRunningTimeDebug = System.currentTimeMillis();
+        HandlerThread ht = new HandlerThread("HandlerThread [" + BeaconService.class.getSimpleName() + "]");
+        ht.start();
 
-        mSimpleLeScanner = new SimpleLeScanner();
-        if (mSimpleLeScanner.startScan(this, mLeScanCallback)) {
-            stopScan(false);
-        } else {
-            stopScan(true);
-        }
-    }    
+        mRunningTimeDebug = System.currentTimeMillis();
+        mSimpleLeScanner = new SimpleLeScanner(this);
+
+        (mHandler = new Handler(ht.getLooper()))
+            .post(new Runnable() {
+
+                @Override
+                public void run() {
+                    if (mSimpleLeScanner.startScan(mLeScanCallback)) {
+                        stopScan(false);
+                    } else {
+                        stopScan(true);
+                    }
+                }
+
+            });
+    }
 
     @Override
     public void onDestroy() {
@@ -187,23 +199,30 @@ public class BeaconService extends Service {
     }
 
     private void stopScan(boolean force) {
-        if (force) {
-            mOnStopScanRunnable.run();
-        } else {
-            mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+        if (mHandler != null) {
+            if (force) {
+                mHandler.post(mOnStopScanRunnable);
+            } else {
+                mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
+            }
         }
     }
 
     private Runnable mOnStopScanRunnable = new Runnable() {
+
             @Override
             public void run() {
                 if (mSimpleLeScanner != null) {
-                    mSimpleLeScanner.stopScan(BeaconService.this, mLeScanCallback);
+                    mSimpleLeScanner.stopScan(mLeScanCallback);
                     mSimpleLeScanner = null;
+
+                    mHandler.getLooper().quit();
+                    mHandler = null;
 
                     stopSelf();
                 }
             }
+
         };
 
     @Override
@@ -212,17 +231,33 @@ public class BeaconService extends Service {
         return START_NOT_STICKY;
     }
 
-    private void sendFoundBeaconBroadcast(BeaconEntity beaconEntity) {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_FOUND_BEACON);
-        // intent.setPackage(getPackageName());
-        intent.putExtra(EXTRA_BEACON_ENTITY, beaconEntity);
-        sendBroadcast(intent);
+    private void sendFoundBeaconBroadcast(final BeaconEntity beaconEntity) {
+        final Context ctx = getApplicationContext();
+
+        runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    Intent intent = new Intent();
+                    intent.setAction(ACTION_FOUND_BEACON);
+                    intent.putExtra(EXTRA_BEACON_ENTITY, beaconEntity);
+                    ctx.sendBroadcast(intent);
+                }
+
+            });
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private static void runOnUiThread(Runnable run) {
+        new Handler(Looper.getMainLooper()).post(run);
+    }
+
+    private static void runOnUiThread(Runnable run, long delayMillis) {
+        new Handler(Looper.getMainLooper()).postDelayed(run, delayMillis);
     }
 
 } // BeaconService
