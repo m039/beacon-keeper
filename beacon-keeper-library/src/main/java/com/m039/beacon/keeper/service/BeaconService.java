@@ -149,14 +149,17 @@ public class BeaconService extends Service {
 
     private SimpleLeScanner mSimpleLeScanner = null;
     private SimpleLeScanner.LeScanCallback mLeScanCallback = new SimpleLeScanner.LeScanCallback() {
+
             @Override
             public void onLeScan(BeaconEntity beaconEntity) {
                 sendFoundBeaconBroadcast(beaconEntity);
             }
+
         };
 
     private long mRunningTimeDebug = 0;
     private Handler mHandler;
+    private boolean mStartedSuccessfully = false;
 
     @Override
     public void onCreate() {
@@ -173,7 +176,7 @@ public class BeaconService extends Service {
 
                 @Override
                 public void run() {
-                    if (mSimpleLeScanner.startScan(mLeScanCallback)) {
+                    if (mStartedSuccessfully = mSimpleLeScanner.startScan(mLeScanCallback)) {
                         stopScan(false);
                     } else {
                         stopScan(true);
@@ -205,6 +208,9 @@ public class BeaconService extends Service {
             } else {
                 mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
             }
+
+            mHandler.getLooper().quit();
+            mHandler = null;
         }
     }
 
@@ -213,11 +219,10 @@ public class BeaconService extends Service {
             @Override
             public void run() {
                 if (mSimpleLeScanner != null) {
-                    mSimpleLeScanner.stopScan(mLeScanCallback);
+                    if (mStartedSuccessfully) {
+                        mSimpleLeScanner.stopScan(mLeScanCallback);
+                    }
                     mSimpleLeScanner = null;
-
-                    mHandler.getLooper().quit();
-                    mHandler = null;
 
                     stopSelf();
                 }

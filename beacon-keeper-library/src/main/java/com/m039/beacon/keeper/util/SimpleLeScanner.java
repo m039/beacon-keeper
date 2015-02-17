@@ -66,7 +66,6 @@ public class SimpleLeScanner {
             if (ba.startLeScan(callback)) {
                 mIsScanning = true;
                 onStartScan();
-
                 return true;
             }
         }
@@ -80,8 +79,8 @@ public class SimpleLeScanner {
         BluetoothAdapter ba = U.getBluetoothAdapter(mContext);
         if (ba != null && mIsScanning && callback != null) {
             ba.stopLeScan(callback);
-            onStopScan();
             mIsScanning = false;
+            onStopScan();
         } else {
             L.wtf(TAG, "Failed to stopScan");
         }
