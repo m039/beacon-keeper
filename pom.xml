@@ -20,7 +20,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.android.sdk>19</version.android.sdk>
-    <version.android.plugin>3.9.0-rc.2</version.android.plugin>
+    <version.android.plugin>4.1.1</version.android.plugin>
     <version.java>1.7</version.java>
     <version.compiler.plugin>3.1</version.compiler.plugin>
     <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
@@ -110,16 +110,15 @@
 
   <build>
     <pluginManagement>
-      <plugins>        
+      <plugins> 
         <plugin>
-          <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+          <groupId>com.simpligility.maven.plugins</groupId>
           <artifactId>android-maven-plugin</artifactId>
           <version>${version.android.plugin}</version>
           <configuration>
             <sdk>
               <platform>${version.android.sdk}</platform>
             </sdk>
-            <!-- <mergeManifests>true</mergeManifests> -->
           </configuration>
         </plugin>
 
@@ -140,6 +139,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${version.maven-surefire-plugin}</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-jarsigner-plugin</artifactId>
+          <version>1.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
