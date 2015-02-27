@@ -19,3 +19,4 @@ pom_back.xml
 *.sig
 beacon-keeper-app/gen-external-apklibs/
 .m039-android-project
+project.properties
