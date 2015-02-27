@@ -24,7 +24,7 @@
     <dependency>
       <groupId>com.m039.beacon.keeper</groupId>
       <artifactId>beacon-keeper-library</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.3</version>
       <type>aar</type>
     </dependency>
 

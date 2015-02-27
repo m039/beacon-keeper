@@ -13,6 +13,7 @@
 
   <artifactId>beacon-keeper-library</artifactId>
   <packaging>aar</packaging>
+  <version>1.0.3</version>
 
   <dependencies>
     <dependency>

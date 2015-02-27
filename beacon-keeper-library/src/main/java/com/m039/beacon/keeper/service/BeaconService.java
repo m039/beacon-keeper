@@ -89,19 +89,22 @@ public class BeaconService extends Service {
                 .getString(R.string.beacon_keeper__pref_key__idle_time_ms);
 
             U.SharedPreferences.getDefaultSharedPreferences(ctx)
-                .registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-                        @Override
-                        public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
-                            if (key != null &&
-                                (key.equals(keyScanningTimeMs) ||
-                                 key.equals(keyIdleTimeMs))) {
-                                L.d(TAG, "BeaconService.onSharedPreferenceChanged: %s", key);
-                                sSharedPreferencesHasChanged = true;
+                .registerOnSharedPreferenceChangeListener
+                (
+                 new SharedPreferences.OnSharedPreferenceChangeListener() {
+                     @Override
+                     public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
+                         if (key != null &&
+                             (key.equals(keyScanningTimeMs) ||
+                              key.equals(keyIdleTimeMs))) {
+                             L.d(TAG, "BeaconService.onSharedPreferenceChanged: %s", key);
+                             sSharedPreferencesHasChanged = true;
 
-                                // Todo: only check if value is changed
-                            }
-                        }
-                    });
+                             // Todo: only check if value is changed
+                         }
+                     }
+                 }
+                 );
 
             sSharedPreferencesChangeListenerRegistered = true;
         }
@@ -181,6 +184,7 @@ public class BeaconService extends Service {
                     } else {
                         stopScan(true);
                     }
+
                 }
 
             });
@@ -202,15 +206,12 @@ public class BeaconService extends Service {
     }
 
     private void stopScan(boolean force) {
-        if (mHandler != null) {
+        if (mSimpleLeScanner != null) {
             if (force) {
                 mHandler.post(mOnStopScanRunnable);
             } else {
                 mHandler.postDelayed(mOnStopScanRunnable, getScanningTimeMs(this));
             }
-
-            mHandler.getLooper().quit();
-            mHandler = null;
         }
     }
 
@@ -223,6 +224,9 @@ public class BeaconService extends Service {
                         mSimpleLeScanner.stopScan(mLeScanCallback);
                     }
                     mSimpleLeScanner = null;
+
+                    mHandler.getLooper().quit();
+                    mHandler = null;
 
                     stopSelf();
                 }
