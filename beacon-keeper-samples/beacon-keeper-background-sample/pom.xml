@@ -8,7 +8,7 @@
   <parent>
     <groupId>com.m039.beacon.keeper</groupId>
     <artifactId>samples</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </parent>
 
   <artifactId>beacon-keeper-background-sample</artifactId>
@@ -23,7 +23,7 @@
     <dependency>
       <groupId>com.m039.beacon.keeper</groupId>
       <artifactId>beacon-keeper-library</artifactId>
-      <version>${project.version}</version>
+      <version>1.0.3</version>
       <type>aar</type>
       <scope>compile</scope>
     </dependency>
@@ -32,7 +32,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+        <groupId>com.simpligility.maven.plugins</groupId>
         <artifactId>android-maven-plugin</artifactId>
         <extensions>true</extensions>
       </plugin>
