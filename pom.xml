@@ -119,6 +119,9 @@
             <sdk>
               <platform>${version.android.sdk}</platform>
             </sdk>
+            <androidManifestFile>${project.basedir}/src/main/AndroidManifest.xml</androidManifestFile>
+            <resourceDirectory>${project.basedir}/src/main/res</resourceDirectory>
+            <assetsDirectory>${project.basedir}/src/main/assets</assetsDirectory>
           </configuration>
         </plugin>
 
