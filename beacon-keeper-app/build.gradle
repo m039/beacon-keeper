@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.1'
+    }
+}
+
+repositories {
+  mavenCentral()
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+  compile project (':beacon-keeper-library')
+  compile 'com.android.support:recyclerview-v7:+'
+  compile 'com.google.android.gms:play-services:+'
+  compile 'uk.co.chrisjenx:calligraphy:1.2.0' 
+} 
