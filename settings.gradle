@@ -1,0 +1,1 @@
+include ":beacon-keeper-library", ":beacon-keeper-samples:beacon-keeper-background-sample", ":beacon-keeper-samples:beacon-keeper-foreground-sample", ":beacon-keeper-app"

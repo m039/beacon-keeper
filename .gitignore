@@ -1,3 +1,5 @@
+local.properties
+build/
 target
 bin
 gen
@@ -20,3 +22,4 @@ pom_back.xml
 beacon-keeper-app/gen-external-apklibs/
 .m039-android-project
 project.properties
+out/

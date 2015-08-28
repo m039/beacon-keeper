@@ -31,14 +31,14 @@
       <dependency>
         <groupId>android</groupId>
         <artifactId>android</artifactId>
-        <version>4.4.2_r3</version>
+        <version>4.4.2_r4</version>
         <scope>provided</scope>
       </dependency>
 
       <dependency>
         <groupId>android</groupId>
         <artifactId>android-test</artifactId>
-        <version>4.4.2_r3</version>
+        <version>4.4.2_r4</version>
         <scope>provided</scope>
       </dependency>
 
@@ -57,27 +57,27 @@
       <dependency>
         <groupId>com.android.support</groupId>
         <artifactId>recyclerview-v7</artifactId>
-        <version>21.0.0-rc1</version>
+        <version>22.2.1</version>
         <type>aar</type>
       </dependency>
 
       <dependency>
         <groupId>android.support</groupId>
         <artifactId>compatibility-v4</artifactId>
-        <version>20.0.0</version>
+        <version>22.2.1</version>
       </dependency>
 
       <dependency>
         <groupId>com.google.android.gms</groupId>
         <artifactId>google-play-services</artifactId>
-        <version>21.0.0</version>
+        <version>25.0.0</version>
         <type>apklib</type>
       </dependency>
 
       <dependency>
         <groupId>com.google.android.gms</groupId>
         <artifactId>google-play-services</artifactId>
-        <version>21.0.0</version>
+        <version>25.0.0</version>
         <type>jar</type>
       </dependency>
 
@@ -119,6 +119,9 @@
             <sdk>
               <platform>${version.android.sdk}</platform>
             </sdk>
+            <androidManifestFile>${project.basedir}/src/main/AndroidManifest.xml</androidManifestFile>
+            <resourceDirectory>${project.basedir}/src/main/res</resourceDirectory>
+            <assetsDirectory>${project.basedir}/src/main/assets</assetsDirectory>
           </configuration>
         </plugin>
 
