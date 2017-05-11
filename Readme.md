@@ -3,7 +3,7 @@ Beacon Keeper
 
 Beacon Keeper is a small, simple and solid library for working with iBeacons for Android. Before using it you may want to try it with [a standalone application](https://play.google.com/store/apps/details?id=com.m039.beacon.keeper.app).
 
-If you need more robust approach, you should prefer [android-beacon-library](https://github.com/AltBeacon/android-beacon-library).
+If you need a more robust approach, you should prefer [android-beacon-library](https://github.com/AltBeacon/android-beacon-library).
 
 Main features
 -------------
