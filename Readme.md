@@ -1,22 +1,20 @@
 Beacon Keeper
 =============
 
-Beacon Keeper is a standalone application in [Google Play Market](https://play.google.com/store/apps/details?id=com.m039.beacon.keeper.app) and this library.
+Beacon Keeper is a small, simple and solid library for working with iBeacons for Android. Before using it you may want to try it with [a standalone application](https://play.google.com/store/apps/details?id=com.m039.beacon.keeper.app).
 
-The main goal of this project is to create solid and the simple library for locating and working with iBeacons for Android.
+If you need more robust approach, you should prefer [android-beacon-library](https://github.com/AltBeacon/android-beacon-library).
 
-*This library is under development*
+Main features
+-------------
 
-Why use Beacon Keeper?
-----------------------
+ * Locating iBeacons in background.
+ * Dead simple [samples](https://github.com/m039/beacon-keeper/tree/master/beacon-keeper-samples).
 
- * Locating iBeacons in background
- * Dead simple [samples](https://github.com/m039/beacon-keeper/tree/master/beacon-keeper-samples)
+Acknowledges
+------------
 
-Thanks
-------
-
-[RadiusNetworks](https://github.com/RadiusNetworks) for its contributions to community and stackoverflow.
+[RadiusNetworks](https://github.com/RadiusNetworks) for their contributions to community.
 
 License
 -------
